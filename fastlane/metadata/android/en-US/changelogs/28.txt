@@ -1,0 +1,2 @@
+ * Hotfix: Workaround for MPD 0.21 protocol breakage. This will reenable MALP with reduced functionality for MPD >=0.21 until a new better solution for album retrieval is found
+

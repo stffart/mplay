@@ -1,0 +1,458 @@
+<!--
+  ~  Copyright (C) 2020 Team Gateship-One
+  ~  (Hendrik Borghorst & Frederik Luetkes)
+  ~
+  ~  The AUTHORS.md file contains a detailed contributors list:
+  ~  <https://gitlab.com/gateship-one/malp/blob/master/AUTHORS.md>
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+    <string name="app_name" translatable="false">@string/app_name_nice</string>
+    <string name="app_name_nice" translatable="false">M.PLAY.</string>
+    <string name="authors" translatable="false">Hendrik Borghorst</string>
+    <string name="team" translatable="false">Team Gateship One</string>
+
+
+    <string name="navigation_drawer_open">Открыть меню</string>
+    <string name="navigation_drawer_close">Закрыть меню</string>
+
+    <!-- Actions -->
+    <string name="action_settings">Параметры</string>
+    <string name="action_edit_profile">Редактировать профиль</string>
+    <string name="action_connect_profile">Подключить профиль</string>
+    <string name="action_remove_profile">Удалить профиль</string>
+    <string name="action_add_profile">Добавить профиль</string>
+    <string name="action_save_profile">Удалить профиль</string>
+
+    <string name="action_add">Добавить</string>
+    <string name="action_add_at_start">Добавить в начало</string>
+    <string name="action_add_album">Добавить альбом</string>
+    <string name="action_play_album">Играть альбом</string>
+    <string name="action_show_all_tracks">Показать все треки</string>
+
+    <string name="action_add_artist">Добавить исполнителя</string>
+    <string name="action_play_artist">Играть исполнителя</string>
+
+    <string name="action_add_directory">Добавить каталог</string>
+    <string name="action_play_directory">Играть каталог</string>
+
+    <string name="action_add_playlist">Добавить плейлист</string>
+    <string name="action_play_playlist">Играть плейлист</string>
+    <string name="action_remove_playlist">Удалить плейлист</string>
+
+    <string name="action_overwrite_playlist">Перезаписать плейлист</string>
+    <string name="action_delete_playlist">Удалить плейлист</string>
+
+    <string name="action_play_everything">Играть всё</string>
+
+    <string name="action_show_artist">Показать исполнителя</string>
+    <string name="action_show_album">Показать альбом</string>
+    <string name="action_show_details">Показать инфо</string>
+
+    <string name="action_reset_artwork">Сбросить изображение</string>
+
+    <string name="action_search">Поиск</string>
+    <string name="action_add_search_result">Добавить результаты поиска</string>
+
+    <string name="action_add_to_saved_playlist">Добавить в плейлист</string>
+    <string name="action_remove_from_list">Удалить из плейлиста</string>
+
+    <string name="action_jump_to_current">К текущему треку</string>
+    <string name="action_toggle_single_mode">Повторять один</string>
+    <string name="action_toggle_consume_mode">Потребление</string>
+    <string name="action_open_fanart">Весь экран</string>
+
+    <string name="action_enqueue">Добавить в плейлист</string>
+    <string name="action_enqueue_at_start">Добавить в начало</string>
+    <string name="action_enqueue_as_next">Играть после текущего</string>
+    <string name="action_play_song">Играть</string>
+    <string name="action_play_albums">Играть альбомы</string>
+    <string name="action_remove_track">Удалить трек</string>
+    <string name="action_remove_album">Удалить альбом</string>
+
+    <string name="action_add_group">Добавить</string>
+    <string name="action_add_url">Добавить URL</string>
+    <string name="action_add_url_playlist">Добавить URL плейлиста</string>
+    <string name="action_show_albums_from_here">Показать альбомы в директории</string>
+    <string name="action_update_database_here">Обновить БД</string>
+
+    <string name="action_wikipedia" translatable="false">Википедия</string>
+    <string name="action_wikipedia_album">Страница альбома</string>
+    <string name="action_wikipedia_artist">Страница исполнителя</string>
+
+    <string name="action_switch_to_output">Переключиться</string>
+    <string name="action_toggle_outputs">Переключить выходы</string>
+
+    <string name="action_share_current_song">Поделиться треком</string>
+
+    <string name="action_npv_show_playlist">Показать плейлист</string>
+    <string name="action_npv_show_cover">Показать обложку</string>
+    <string name="action_npv_more_options">Больше опций</string>
+
+    <!-- Menu entries -->
+    <string name="menu_library">Медиатека</string>
+    <string name="menu_settings">Параметры</string>
+    <string name="menu_server">Сервер</string>
+    <string name="menu_profiles">Профили</string>
+    <string name="menu_playlists">Плейлисты</string>
+    <string name="menu_outputs">Выходы</string>
+    <string name="menu_files">Файлы</string>
+    <string name="menu_statistic">Статистика</string>
+    <string name="menu_app_settings">Настройки приложения</string>
+    <string name="menu_information">Информация</string>
+
+    <string name="menu_search">Поиск</string>
+
+    <string name="menu_albums">Альбомы</string>
+    <string name="menu_album">Альбом</string>
+    <string name="menu_artists">Исполнители</string>
+    <string name="menu_artist">Исполнитель</string>
+    <string name="artwork_settings">Настройки изображений</string>
+
+    <!-- seperator -->
+    <string name="track_item_separator" translatable="false">" - "</string>
+
+    <string name="track_item_loading">Загрузка</string>
+
+    <string name="main_activity_connected">Подключен к серверу</string>
+    <string name="main_activity_disconnected">Отключен от сервера</string>
+
+    <!-- No Tag texts -->
+    <string name="no_album_tag">Нет тега альбома</string>
+    <string name="no_artist_tag">Нет тега исполнителя</string>
+
+    <!-- popup menu titles -->
+    <string name="action_clear_playlist">Очистить плейлист</string>
+    <string name="action_save_playlist">Сохранить плейлист</string>
+    <string name="action_start_streaming">Start streaming</string>
+    <string name="action_stop_streaming">Stop streaming</string>
+    <string name="action_shuffle_playlist">Перемешать плейлист</string>
+
+    <!-- edit profile fragment strings -->
+    <string name="fragment_profile_title">Редактировать профиль</string>
+    <string name="fragment_profile_profilename">Профиль:</string>
+    <string name="fragment_profile_hostname">Хост или IP:</string>
+    <string name="fragment_profile_password">Пароль:</string>
+    <string name="fragment_profile_port">Порт:</string>
+    <string name="fragment_profile_streaming_url">Streaming url:</string>
+    <string name="fragment_profile_streaming_enabled">Enable streaming from server</string>
+
+    <string name="fragment_profile_use_mpd_covers">Use MPD covers if available</string>
+    <string name="fragment_profile_use_mpd_covers_text">Use MPD covers if available</string>
+
+    <string name="fragment_profile_http_cover_enabled">Prefer HTTP cover files</string>
+    <string name="fragment_profile_http_cover_regex">Cover path (%d replaced by the files directory)</string>
+
+    <string name="fragment_profile_default_name">Новый профиль</string>
+
+    <!-- Now playing view text view values -->
+    <string name="song_track_no">Номер.:</string>
+    <string name="song_playlist_no">Номер.:</string>
+    <string name="song_bitrate">Битрейт:</string>
+    <string name="song_audio_properties">Свойства аудио:</string>
+    <string name="song_uri">URI трека:</string>
+    <string name="song_title">Имя:</string>
+    <string name="song_album">Альбом:</string>
+    <string name="song_artist">Исполнители:</string>
+    <string name="song_artist_sort">Исполнители (сорт.):</string>
+    <string name="song_album_artist">Исполнитель альбома:</string>
+    <string name="song_album_artist_sort">Исполнители альбома (сорт.):</string>
+
+    <string name="song_date">Дата:</string>
+    <string name="song_disc">Диск:</string>
+    <string name="song_duration">Длительность:</string>
+
+    <string name="song_title_mbid">MusicBrainz ID трека:</string>
+    <string name="song_album_mbid">MusicBrainz ID альбома:</string>
+    <string name="song_artist_mbid">MusicBrainz ID исполнителя:</string>
+    <string name="song_album_artist_mbid">MusicBrainz ID исполнителя:</string>
+
+    <!-- Server statistics text view values -->
+    <string name="server_statistic_artists_count">Всего исполнителей:</string>
+    <string name="server_statistic_albums_count">Всего альбомов:</string>
+    <string name="server_statistic_songs_count">Всего треков:</string>
+
+    <string name="server_statistic_uptime">Сервер работает:</string>
+    <string name="server_statistic_db_playtime">Суммарная длительность:</string>
+    <string name="server_statistic_playtime">Длительность записи:</string>
+    <string name="server_statistic_db_update">Последнее обновление БД:</string>
+    <string name="server_statistic_malp_server_info">Возможности сервера:</string>
+
+    <string name="duration_days">Дней</string>
+
+    <string name="server_statistic_update_database">Обновить статистику</string>
+    <string name="server_statistic_updateing_database">Обновляется БД, пожалуйста подождите!</string>
+
+    <!-- Snackbar text -->
+    <string name="snackbar_mpd_server_error_format">Ошибка %d/%d: %s</string>
+    <string name="snackbar_mpd_connection_error_format">EtrackUrirror: %s</string>
+
+    <!-- Sharing text -->
+    <string name="sharing_song_details">Я слушаю %s by %s из альбома %s</string>
+
+    <!-- dialog titles -->
+    <string name="dialog_save_playlist">Сохранить плейлист</string>
+    <string name="dialog_action_cancel">Отмена</string>
+    <string name="dialog_action_save">Сохранить</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_yes">Да</string>
+    <string name="dialog_action_no">Нет</string>
+    <string name="dialog_choose_playlist">Выбрать плейлист</string>
+
+    <string name="dialog_message_overwrite_playlist">Вы хотите перезаписать плейлист:</string>
+    <string name="dialog_message_delete_playlist">Вы хотите удалить плейлист:</string>
+    <string name="dialog_message_delete_current_playlist">Вы хотите удалить плейлист?</string>
+
+    <string name="dialog_message_shuffle_current_playlist">Вы хотите перемешать плейлист?</string>
+
+    <string name="dialog_share_song_details">Поделиться инфо о песне</string>
+
+    <string name="dialog_no_browser_found_title">Браузер недоступен</string>
+    <string name="dialog_no_browser_found_message">На вашем устройстве не найден браузер</string>
+
+    <!-- dialog default names  -->
+    <string name="default_playlist_title">Новый плейлист</string>
+    <string name="create_new_playlist">Создать новый плейлист</string>
+
+    <string name="preference_launch_faq">F.A.Q.</string>
+    <string name="preference_launch_faq_text">Как получить помощь по приложению</string>
+    <string name="preference_launch_about">О программе</string>
+    <string name="preference_launch_about_text">Версия, лицензия и разработчики</string>
+
+    <string name="preference_theme_title">Тема</string>
+    <string name="preference_theme_summary">Выбрать другой дизайн.</string>
+    <string name="preference_theme_message">Выбрать тему</string>
+
+    <string name="preference_theme_item_indigo">Indigo</string>
+    <string name="preference_theme_item_orange">Orange</string>
+    <string name="preference_theme_item_deep_orange">Deep Orange</string>
+    <string name="preference_theme_item_blue">Blue</string>
+    <string name="preference_theme_item_dark_grey">Dark Grey</string>
+    <string name="preference_theme_item_brown">Brown</string>
+    <string name="preference_theme_item_light_green">Light Green</string>
+    <string name="preference_theme_item_red">Red</string>
+    <string name="preference_theme_item_oled_dark">OLED Dark</string>
+
+    <string name="preference_album_sort_order_title">Порядок сортировки альбомов</string>
+    <string name="preference_album_sort_order_message">Сортировать по</string>
+    <string name="preference_album_sort_order_summary">Выбрать порядок сортировки альбомов исполнителя.</string>
+
+    <string name="preference_album_sort_order_name">Название</string>
+    <string name="preference_album_sort_order_year">Год</string>
+
+    <string name="preference_dark_theme_title">Темная тема</string>
+    <string name="preference_dark_theme_message">Использовать темную тему</string>
+
+    <string name="preference_show_artist_image_title">Показывать изображение исполнителя</string>
+    <string name="preference_show_artist_image_text">Показывать обложку альбома или изображение исполнителя для текущего трека</string>
+
+    <string name="preference_npv_show_playlist_title">Список плейлистов при запуске</string>
+    <string name="preference_npv_show_playlist_text">Показать плейлист если M.PLAY открыт из виджета или уведомления
+    </string>
+
+    <string name="preference_default_view_title">Вид по-умолчанию</string>
+    <string name="preference_default_view_message">Выберите вид по-умолчанию</string>
+    <string name="preference_default_view_summary">Выберите вид по-умолчанию для приложения.</string>
+
+    <string name="preference_library_view_title">Выбрать вид медиатеки</string>
+    <string name="preference_library_view_message">Выбрать вид медиатеки</string>
+    <string name="preference_library_view_summary">Выбрать вид медиатеки (альбомы и исполнители)</string>
+
+    <string name="preference_library_view_list">Список</string>
+    <string name="preference_library_view_grid">Панели</string>
+
+    <string name="preference_use_album_artists_title">Использовать тег AlbumArtist</string>
+    <string name="preference_use_album_artists_text">Использовать тег AlbumArtist для списка исполнителей (Метод медленнее
+       и может приводить к ошибкам в изображениях).
+    </string>
+
+    <string name="preference_use_artist_sort_title">Использовать тег ArtistSort</string>
+    <string name="preference_use_artist_sort_text">Использовать тег ArtistSort (или AlbumartistSort) если он предоставляется
+        сервером.
+    </string>
+
+    <string name="preference_use_tags_in_filebrowser_title">Использовать теги при просмотре файлов</string>
+    <string name="preference_use_tags_in_filebrowser_text">Использовать теги при просмотре файлов вместо имен.
+        Отключить чтобы показывать имена файлов.
+    </string>
+
+    <string name="preference_library_click_action_title">Действие при клике по треку</string>
+    <string name="preference_library_click_action_summary">Выберите действие для трека</string>
+    <string name="preference_library_click_action_message">Выберите действие по-умолчанию для трека, вызываемое по клику
+    </string>
+
+    <string name="preference_library_click_action_details" translatable="false">@string/action_show_details</string>
+    <string name="preference_library_click_action_add" translatable="false">@string/action_add</string>
+    <string name="preference_library_click_action_add_at_start" translatable="false">@string/action_add_at_start</string>
+    <string name="preference_library_click_action_play" translatable="false">@string/action_play_song</string>
+    <string name="preference_library_click_action_play_next" translatable="false">@string/action_enqueue_as_next
+    </string>
+
+    <string name="preference_volume_control_title">Выбрать вид регулятора громкости</string>
+    <string name="preference_volume_control_message">Выбрать вид регулятора громкости</string>
+    <string name="preference_volume_control_summary">Выбрать вид регулятора громкости в панели управления
+    </string>
+
+    <string name="preference_volume_control_off">Отключен</string>
+    <string name="preference_volume_control_seekbar">Слайдер</string>
+    <string name="preference_volume_control_buttons">Кнопки</string>
+
+    <string name="preference_generic_keep_display_on_title">Не выключать дисплей</string>
+    <string name="preference_generic_keep_display_on_text">Дисплей будет включен во время работы приложения.
+    </string>
+
+    <string name="preference_generic_hardware_keys_title">Использовать кнопки громкости</string>
+    <string name="preference_generic_hardware_keys_text">Использовать кнопки громкости устройства для управления
+    </string>
+
+    <string name="preference_volume_step_title">Шаг громкости</string>
+    <string name="preference_volume_step_text">Шаг регулятора громкости при управлении кнопками
+    </string>
+
+    <string name="volume_step_size_dialog_title">Шаг: %d%%</string>
+    <string name="volume_step_size_dialog_warning">Вы выбираете большое значение для шага регулировки громкости. Будьте осторожны
+        высокая громкость может повредить вашим ушам или вашему оборудованию!
+    </string>
+
+    <string name="preference_show_notification_title">Показывать уведомление</string>
+    <string name="preference_show_notification_text">Отображать уведомление при выходе из основного интерфейса приложения. Необходимо для работы виджета. При нажатии \'Подключить\' на виджете уведомление также будет отображаться.
+    </string>
+
+    <string name="preference_use_english_wikipedia_title">Use English Wikipedia</string>
+    <string name="preference_use_english_wikipedia_text">Use the English Wikipedia version to lookup pages</string>
+
+    <string name="preference_show_playlist_sections_title">Показывать секции в плейлисте</string>
+    <string name="preference_show_playlist_sections_text">Показывать секции с обложками альбомов в плейлисте</string>
+
+    <string name="preference_category_design">Дизайн</string>
+    <string name="preference_category_library">Медиатека</string>
+    <string name="preference_category_controls">Управление</string>
+    <string name="preference_category_other">Другое</string>
+
+    <!-- artwork preferences -->
+    <string name="preference_artwork_album_provider_title">Источник обложек альбомов</string>
+    <string name="preference_artwork_album_provider_summary">Выберите источник для обложек альбомов.</string>
+    <string name="preference_artwork_album_provider_message">Выберите источник для обложек альбомов.</string>
+
+    <string name="musicbrainz" translatable="false">MusicBrainz</string>
+    <string name="last_fm" translatable="false">Last.fm</string>
+    <string name="fanart_tv" translatable="false">Fanart.tv</string>
+    <string name="provider_off">Отключено</string>
+
+    <string name="preference_artwork_artist_provider_title">Источник изображений исполнителя</string>
+    <string name="preference_artwork_artist_provider_summary">Выберите источник изображений исполнителя.</string>
+    <string name="preference_artwork_artist_provider_message">Выберите источник изображений исполнителя.</string>
+
+    <string name="preference_artwork_clear_artist">Очистить изображения исполнителей</string>
+    <string name="preference_artwork_clear_artist_summary">Удалить все сохраненные изображения исполнителя.</string>
+    <string name="preference_artwork_clear_album">Очистить ихображения альбомов</string>
+    <string name="preference_artwork_clear_album_summary">Удалить все сохраненные изображения альбомов.</string>
+
+    <string name="preference_artwork_clear_blocked_artist">Удалить заблокированные изображения исполнителей</string>
+    <string name="preference_artwork_clear_blocked_artist_summary">Удалить все записи об изображениях исполнителей, которые не были найдены
+    </string>
+    <string name="preference_artwork_clear_blocked_album">Удалить все заблокированные обложки альбомов</string>
+    <string name="preference_artwork_clear_blocked_album_summary">Удалить все записи об обложках альбомов, которые не были найдены.
+    </string>
+
+    <string name="preference_artwork_bulk_load">Загрузить все изображения для медиатеки.</string>
+    <string name="preference_artwork_bulk_load_summary">Загружает множество изображений. Операция может занять продолжительное время и потребляет много трафика.
+    </string>
+
+    <string name="preference_artwork_wifi_only_title">Загружать только по WIFI</string>
+    <string name="preference_artwork_wifi_only_text">Загрузка изображений будет выполняться только при подключении по WIFI.
+    </string>
+
+    <string name="preference_category_artwork_settings">Настройки изображений</string>
+    <string name="preference_category_artwork_database_cleanup">Очистка БД</string>
+    <string name="preference_category_artwork_other_actions">Другие действия</string>
+
+    <string name="search_choice_track">Трек</string>
+    <string name="search_choice_album">Альбом</string>
+    <string name="search_choice_artist">Исполнитель</string>
+    <string name="search_choice_file">Файл</string>
+    <string name="search_choice_everything">Всё</string>
+
+    <string name="welcome_dialog_title">Профили не найдены</string>
+    <string name="welcome_dialog_text">This application is a remote control for MPD. If you don\'t know MPD this
+        application is probably useless for you, sorry :).\n\nTo use this application add a new profile with a add
+        button in the upper right corner.\nThis application may or may not work with Mopidy as this is an MPD client, no
+        support provided for Mopidy.\n\nIf you would like an music player based on the same interface, try Odyssey
+        (https://gitlab.com/gateship-one/odyssey).
+    </string>
+
+    <string name="bulk_download_notice_title">Загрузка изображений</string>
+    <string name="bulk_download_notice_text">Downloading a large amount of images puts heavy load on the servers of the
+        service you chose. It may occur that a server load prevents downloading of images. The downloader will then
+        cancel its action if it detects an overload.\n\nPlease consider donating to the artwork services.
+    </string>
+
+    <!-- About activity -->
+    <string name="artwork_provided_by">Изображение из:</string>
+    <string name="acknowledgement_text">Big thanks to Frederik Lütkes for his continuous pressure to develop Odyssey, a
+        music player on which this GUI is based on.
+    </string>
+    <string name="license_text">This application is licensed under the GPLv3 license.\nMaterial icons are licensed under
+        the CC-BY license by Google.
+    </string>
+    <string name="sources_text">The source code is available on GitLab:\nhttps://gitlab.com/gateship-one/malp</string>
+    <string name="activity_about_version">Версия:</string>
+    <!-- will be used to display the git commit hash - only used in debug builds -->
+    <string name="activity_about_git_hash" translatable="false">Git Hash:</string>
+
+    <string name="url_musicbrainz" translatable="false">https://www.musicbrainz.org</string>
+    <string name="url_lastfm" translatable="false">https://www.last.fm</string>
+    <string name="url_fanarttv" translatable="false">https://fanart.tv</string>
+    <string name="url_faq" translatable="false">https://gitlab.com/gateship-one/malp/wikis/FAQ</string>
+
+    <!-- Bulk downloader service -->
+    <string name="downloader_notification_title">Запущена массовая загрузка</string>
+    <string name="downloader_notification_remaining_images">Загруженные изображения:</string>
+    <string name="downloader_notification_initialize">Запуск загрузки</string>
+
+    <string name="notification_channel_name_playback">Проигрыватель</string>
+    <string name="notification_channel_name_bulk_download">Загрузчик</string>
+
+    <!-- Widget -->
+    <string name="widget_disconnected">Отключено</string>
+    <string name="widget_connect">Подключить</string>
+
+    <!-- Contributors activity -->
+    <string name="contributors_title">Contributors</string>
+    <string name="contributor_team" translatable="false">Team Gateship One</string>
+    <string name="contributor_translator_japanese">Japanese Translation</string>
+    <string name="contributor_translator_french">French Translation</string>
+    <string name="contributor_translator_spanish">Spanish Translation</string>
+    <string name="contributor_translator_korean">Korean Translation</string>
+    <string name="contributor_translator_hungarian">Hungarian Translation</string>
+    <string name="contributor_translator_swedish">Swedish Translation</string>
+
+    <!-- Thirdparty Licenses dialog -->
+    <string name="thirdparty_licenses_dialog_title">Third Party Licenses</string>
+
+    <!-- templates -->
+    <string name="profile_host_port_template" translatable="false">%1$s:%2$d</string>
+    <string name="track_item_line_template" translatable="false">%1$s - %2$s</string>
+    <string name="track_number_template" translatable="false">%1$d / %2$d</string>
+    <string name="volume_level_template" translatable="false">%1$d%%</string>
+    <string name="tag_header_template" translatable="false">%1$s:</string>
+
+    <string name="bitrate_unit_kilo_bits_template">%1$d kbps</string>
+    <string name="samplerate_unit_hertz_template">%1$d Hz</string>
+    <string name="sampleformat_unit_bits_template">%1$s bits</string>
+    <string name="channels_template">%1$d channels</string>
+</resources>

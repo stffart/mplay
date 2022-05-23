@@ -1,0 +1,8 @@
+* add hungarian translation (Thanks to Dániel Flórián)
+* migrate to AndroidX
+* improve artwork retrieval
+* remove Last.fm as artist image provider
+* fix last updated timestamp in statistics view
+* fix several backnavigation issues
+* add search view as default view
+* fix aspect ratio of images

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (C) 2020 Team Gateship-One
+  ~  (Hendrik Borghorst & Frederik Luetkes)
+  ~
+  ~  The AUTHORS.md file contains a detailed contributors list:
+  ~  <https://gitlab.com/gateship-one/malp/blob/master/AUTHORS.md>
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.gateshipone.mplay">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name="org.mopidy.mplay.application.MPlayApplication"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.orange"
+        android:usesCleartextTraffic="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        tools:targetApi="s">
+
+        <activity
+            android:name="org.mopidy.mplay.application.activities.MainActivity"
+            android:theme="@style/Theme.App.Starting"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.mopidy.mplay.mplay.application.activities.AboutActivity"
+            android:label="About"
+            android:parentActivityName="org.mopidy.mplay.application.activities.MainActivity">
+        </activity>
+        <activity
+            android:name="org.mopidy.mplay.application.activities.FanartActivity"
+            android:label="FanartActivity"
+            android:parentActivityName="org.mopidy.mplay.application.activities.MainActivity">
+        </activity>
+        <activity
+            android:name="org.mopidy.mplay.application.activities.ContributorsActivity"
+            android:label="Contributors"
+            android:parentActivityName="org.mopidy.mplay.application.activities.MainActivity" />
+
+        <service
+            android:name="org.mopidy.mplay.application.artwork.BulkDownloadService"
+            android:exported="false"
+            android:process=":downloadProcess" />
+
+        <service
+            android:name="org.mopidy.mplay.application.background.BackgroundService"
+            android:exported="false"
+            android:process=":widgetService"
+            android:stopWithTask="false" />
+
+        <receiver android:name="org.mopidy.mplay.application.background.RemoteControlReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="org.mopidy.mplay.application.background.WidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="org.mopidy.mplay.action_new_artwork_ready" />
+                <action android:name="org.mopidy.mplay.widget.status_changed" />
+                <action android:name="org.mopidy.mplay.widget.track_changed" />
+                <action android:name="org.mopidy.mplay.widget.server_disconnected" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_big_info" />
+        </receiver>
+    </application>
+
+</manifest>

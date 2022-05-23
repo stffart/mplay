@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (C) 2020 Team Gateship-One
+  ~  (Hendrik Borghorst & Frederik Luetkes)
+  ~
+  ~  The AUTHORS.md file contains a detailed contributors list:
+  ~  <https://gitlab.com/gateship-one/malp/blob/master/AUTHORS.md>
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:title="@string/preference_category_artwork_settings"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="musicbrainz"
+            android:dialogTitle="@string/preference_artwork_album_provider_title"
+            android:entries="@array/preference_artwork_album_provider_entries"
+            android:entryValues="@array/preference_artwork_album_provider_values"
+            android:key="@string/pref_album_provider_key"
+            android:persistent="true"
+            android:summary="@string/preference_artwork_album_provider_summary"
+            android:title="@string/preference_artwork_album_provider_title"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:defaultValue="fanart_tv"
+            android:dialogTitle="@string/preference_artwork_artist_provider_title"
+            android:entries="@array/preference_artwork_artist_provider_entries"
+            android:entryValues="@array/preference_artwork_artist_provider_values"
+            android:key="@string/pref_artist_provider_key"
+            android:persistent="true"
+            android:summary="@string/preference_artwork_artist_provider_summary"
+            android:title="@string/preference_artwork_artist_provider_title"
+            app:iconSpaceReserved="false" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_download_wifi_default"
+            android:key="@string/pref_download_wifi_only_key"
+            android:persistent="true"
+            android:summary="@string/preference_artwork_wifi_only_text"
+            android:title="@string/preference_artwork_wifi_only_title"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/preference_category_artwork_database_cleanup"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="@string/pref_clear_album_key"
+            android:summary="@string/preference_artwork_clear_album_summary"
+            android:title="@string/preference_artwork_clear_album"
+            app:iconSpaceReserved="false" />
+        <Preference
+            android:key="@string/pref_clear_artist_key"
+            android:summary="@string/preference_artwork_clear_artist_summary"
+            android:title="@string/preference_artwork_clear_artist"
+            app:iconSpaceReserved="false" />
+        <Preference
+            android:key="@string/pref_clear_blocked_album_key"
+            android:summary="@string/preference_artwork_clear_blocked_album_summary"
+            android:title="@string/preference_artwork_clear_blocked_album"
+            app:iconSpaceReserved="false" />
+        <Preference
+            android:key="@string/pref_clear_blocked_artist_key"
+            android:summary="@string/preference_artwork_clear_blocked_artist_summary"
+            android:title="@string/preference_artwork_clear_blocked_artist"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/preference_category_artwork_other_actions"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="@string/pref_bulk_load_key"
+            android:summary="@string/preference_artwork_bulk_load_summary"
+            android:title="@string/preference_artwork_bulk_load"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

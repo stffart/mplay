@@ -1,0 +1,1 @@
+* Disable list grouping for all MPD versions >0.21.0 until M.A.L.P. can use list grouping with the changed behavior again

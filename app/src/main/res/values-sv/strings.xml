@@ -1,0 +1,428 @@
+<!--
+  ~  Copyright (C) 2020 Team Gateship-One
+  ~  (Hendrik Borghorst & Frederik Luetkes)
+  ~
+  ~  The AUTHORS.md file contains a detailed contributors list:
+  ~  <https://gitlab.com/gateship-one/malp/blob/master/AUTHORS.md>
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+    <string name="navigation_drawer_open">Öppna navigeringspanel</string>
+    <string name="navigation_drawer_close">Stäng naviveringspanel</string>
+
+    <!-- Actions -->
+    <string name="action_settings">Inställningar</string>
+    <string name="action_edit_profile">Redigera profil</string>
+    <string name="action_connect_profile">Anslut profil</string>
+    <string name="action_remove_profile">Ta bort profil</string>
+    <string name="action_add_profile">Lägg till profil</string>
+    <string name="action_save_profile">Spara profil</string>
+
+    <string name="action_add">Lägg till</string>
+    <string name="action_add_album">Lägg till album</string>
+    <string name="action_play_album">Spela album</string>
+    <string name="action_show_all_tracks">Visa alla spår</string>
+
+    <string name="action_add_artist">Lägg till artist</string>
+    <string name="action_play_artist">Spela artist</string>
+
+    <string name="action_add_directory">Lägg till katalog</string>
+    <string name="action_play_directory">Spela katalog</string>
+
+    <string name="action_add_playlist">Lägg till spellista</string>
+    <string name="action_play_playlist">Spela spellista</string>
+    <string name="action_remove_playlist">Ta bort spellista</string>
+
+    <string name="action_overwrite_playlist">Skriv över spellista</string>
+    <string name="action_delete_playlist">Ta bort spellista</string>
+
+    <string name="action_play_everything">Spela allting</string>
+
+    <string name="action_show_artist">Visa artist</string>
+    <string name="action_show_album">Visa album</string>
+    <string name="action_show_details">Visa detaljer</string>
+
+    <string name="action_reset_artwork">Återställ omslag</string>
+
+    <string name="action_search">Sökstring</string>
+    <string name="action_add_search_result">Lägg till sökresultat</string>
+
+    <string name="action_add_to_saved_playlist">Lägg till i sparad spellista</string>
+    <string name="action_remove_from_list">Ta bort från spellista</string>
+
+    <string name="action_jump_to_current">Hoppa till aktuell låt</string>
+    <string name="action_toggle_single_mode">Enstaka uppspelning</string>
+    <string name="action_toggle_consume_mode">Konsumera spår</string>
+    <string name="action_open_fanart">Gå till helskärmsläge</string>
+
+    <string name="action_enqueue">Lägg till spellista</string>
+    <string name="action_enqueue_as_next">Spela efter aktuell låt</string>
+    <string name="action_play_song">Spela låt</string>
+    <string name="action_play_albums">Spela albums</string>
+    <string name="action_remove_track">Ta bort spår</string>
+    <string name="action_remove_album">Ta bort album</string>
+
+    <string name="action_add_group">Lägg till</string>
+    <string name="action_add_url">Lägg till fil-URL</string>
+    <string name="action_add_url_playlist">Lägg till spellist-URL</string>
+    <string name="action_show_albums_from_here">Visa album i denna katalog</string>
+    <string name="action_update_database_here">Uppdatera databasen här</string>
+
+    <string name="action_wikipedia_album">Öppna album</string>
+    <string name="action_wikipedia_artist">Öppna artist</string>
+
+    <string name="action_switch_to_output">Växla till utgång</string>
+    <string name="action_toggle_outputs">Växla utgångar</string>
+
+    <string name="action_share_current_song">Dela aktuell låt</string>
+
+    <!-- Menu entries -->
+    <string name="menu_library">Bibliotek</string>
+    <string name="menu_settings">Inställningar</string>
+    <string name="menu_server">Serveregenskaper</string>
+    <string name="menu_profiles">Profiler</string>
+    <string name="menu_playlists">Spellistor</string>
+    <string name="menu_outputs">Utgångar</string>
+    <string name="menu_files">Filer</string>
+    <string name="menu_statistic">Statistik</string>
+    <string name="menu_app_settings">App-inställningar</string>
+    <string name="menu_information">Information</string>
+
+    <string name="menu_search">Sök</string>
+
+    <string name="menu_albums">Album</string>
+    <string name="menu_album">Album</string>
+    <string name="menu_artists">Artister</string>
+    <string name="menu_artist">Artist</string>
+    <string name="artwork_settings">Omslagsinställningar</string>
+
+    <!-- seperator -->
+
+    <string name="track_item_loading">Spår laddar</string>
+
+    <string name="main_activity_connected">Ansluten till MPD-server</string>
+    <string name="main_activity_disconnected">Frånkopplad från MPD-server</string>
+
+    <!-- No Tag texts -->
+    <string name="no_album_tag">Ingen albumtagg</string>
+    <string name="no_artist_tag">Ingen artisttagg</string>
+
+    <!-- popup menu titles -->
+    <string name="action_clear_playlist">Rensa spellista</string>
+    <string name="action_save_playlist">Spara spellista</string>
+    <string name="action_start_streaming">Börja strömma</string>
+    <string name="action_stop_streaming">Sluta strömma</string>
+    <string name="action_shuffle_playlist">Blanda spellista</string>
+
+    <!-- edit profile fragment strings -->
+    <string name="fragment_profile_title">Redigera profil</string>
+    <string name="fragment_profile_profilename">Profilnamn:</string>
+    <string name="fragment_profile_hostname">Värdnamn eller IP:</string>
+    <string name="fragment_profile_password">Lösenord:</string>
+    <string name="fragment_profile_port">Port:</string>
+    <string name="fragment_profile_streaming_url">Strömnings-URL:</string>
+    <string name="fragment_profile_streaming_enabled">Aktivera strömning från server</string>
+
+    <string name="fragment_profile_use_mpd_covers">Använd MPD-omslag om tillgängliga</string>
+    <string name="fragment_profile_use_mpd_covers_text">Använd MPD-omslag om tillgängliga</string>
+
+    <string name="fragment_profile_http_cover_enabled">Föredra HTTP-omslagsfiler</string>
+    <string name="fragment_profile_http_cover_regex">Omslagssökväg (%d ersätts av filernas katalog)</string>
+
+    <string name="fragment_profile_default_name">Ny profil</string>
+
+    <!-- Now playing view text view values -->
+    <string name="song_track_no">Spår nr.:</string>
+    <string name="song_playlist_no">Spellista No.:</string>
+    <string name="song_bitrate">Hastighet:</string>
+    <string name="song_audio_properties">Ljudegenskaper:</string>
+    <string name="song_uri">Spår-URI:</string>
+    <string name="song_title">Titel:</string>
+    <string name="song_album">Album:</string>
+    <string name="song_artist">Artist:</string>
+    <string name="song_artist_sort">Artist (sortering):</string>
+    <string name="song_album_artist">Albumartist:</string>
+    <string name="song_album_artist_sort">Albumartist (sortering):</string>
+
+    <string name="song_date">Datum:</string>
+    <string name="song_disc">Disk:</string>
+    <string name="song_duration">Varaktighet:</string>
+
+    <string name="song_title_mbid">MusicBrainz spår-ID:</string>
+    <string name="song_album_mbid">MusicBrainz album-ID:</string>
+    <string name="song_artist_mbid">MusicBrainz artist-ID:</string>
+    <string name="song_album_artist_mbid">MusicBrainz albumartist-ID:</string>
+
+    <!-- Server statistics text view values -->
+    <string name="server_statistic_artists_count">Antal artister:</string>
+    <string name="server_statistic_albums_count">Antal album:</string>
+    <string name="server_statistic_songs_count">Antal låtar:</string>
+
+    <string name="server_statistic_uptime">Drifttid för MPD-server:</string>
+    <string name="server_statistic_db_playtime">Varaktighet för hela databasen:</string>
+    <string name="server_statistic_playtime">Registrerad speltid:</string>
+    <string name="server_statistic_db_update">Senaste databasuppdatering:</string>
+    <string name="server_statistic_malp_server_info">Serverfunktioner:</string>
+
+    <string name="duration_days">Dagar</string>
+
+    <string name="server_statistic_update_database">Uppdatera serverdatabas</string>
+    <string name="server_statistic_updateing_database">Servern uppdaterar sin databas, vänta!</string>
+
+    <!-- Snackbar text -->
+    <string name="snackbar_mpd_server_error_format">Fel %d/%d: %s</string>
+    <string name="snackbar_mpd_connection_error_format">Spårurifel: %s</string>
+
+    <!-- Sharing text -->
+    <string name="sharing_song_details">Jag lyssnar på %s av %s från album %s</string>
+
+    <!-- dialog titles -->
+    <string name="dialog_save_playlist">Spara spellista</string>
+    <string name="dialog_action_cancel">Avbryt</string>
+    <string name="dialog_action_save">Spara</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_yes">Ja</string>
+    <string name="dialog_action_no">Nej</string>
+    <string name="dialog_choose_playlist">Välj spellista</string>
+
+    <string name="dialog_message_overwrite_playlist">Vill du skriva över spellistan:</string>
+    <string name="dialog_message_delete_playlist">Vill du ta bort spellistan:</string>
+    <string name="dialog_message_delete_current_playlist">Vill du ta bort spellistan?</string>
+
+    <string name="dialog_message_shuffle_current_playlist">Vill du blanda spellistan?</string>
+
+    <string name="dialog_share_song_details">Dela låtdetaljer</string>
+
+    <!-- dialog default names  -->
+    <string name="default_playlist_title">Ny spellista</string>
+    <string name="create_new_playlist">Skapa ny spellista</string>
+
+    <string name="preference_launch_faq">F.A.Q.</string>
+    <string name="preference_launch_faq_text">Information om hur du får hjälp med denna app</string>
+    <string name="preference_launch_about">Om</string>
+    <string name="preference_launch_about_text">Version, licens och bidragsgivarinformation</string>
+
+    <string name="preference_theme_title">Tema</string>
+    <string name="preference_theme_summary">Välj en annan design på appen.</string>
+    <string name="preference_theme_message">Välj ett tema</string>
+
+    <string name="preference_theme_item_indigo">Indigo</string>
+    <string name="preference_theme_item_orange">Orange</string>
+    <string name="preference_theme_item_deep_orange">Mörkorange</string>
+    <string name="preference_theme_item_blue">Blå</string>
+    <string name="preference_theme_item_dark_grey">Mörkgrå</string>
+    <string name="preference_theme_item_brown">Brun</string>
+    <string name="preference_theme_item_light_green">Ljusgrön</string>
+    <string name="preference_theme_item_red">Röd</string>
+    <string name="preference_theme_item_oled_dark">OLED-mörk</string>
+
+    <string name="preference_album_sort_order_title">Sorteringsordning för artistalbum</string>
+    <string name="preference_album_sort_order_message">Sortera efter</string>
+    <string name="preference_album_sort_order_summary">Välj sorteringsordning för en artists album.</string>
+
+    <string name="preference_album_sort_order_name">Namn</string>
+    <string name="preference_album_sort_order_year">År</string>
+
+    <string name="preference_dark_theme_title">Mörkt tema</string>
+    <string name="preference_dark_theme_message">Använd ett mörkttema</string>
+
+    <string name="preference_show_artist_image_title">Visa artistbild</string>
+    <string name="preference_show_artist_image_text">Växla mellan albumomslag och en bild på artisten
+	i vyn för låten som spelas</string>
+
+    <string name="preference_npv_show_playlist_title">Starta med spellistvy</string>
+    <string name="preference_npv_show_playlist_text">Visa spellistan om M.A.L.P. öppnas via komponent eller avisering
+	medan uppspelning är aktiv
+    </string>
+
+    <string name="preference_default_view_title">Standardvy</string>
+    <string name="preference_default_view_message">Välj standardvy</string>
+    <string name="preference_default_view_summary">Välj standardvyn för appen.</string>
+
+    <string name="preference_library_view_title">Välj biblioteksvy</string>
+    <string name="preference_library_view_message">Välj biblioteksvy</string>
+    <string name="preference_library_view_summary">Välj vyn som används för album och artister</string>
+
+    <string name="preference_library_view_list">Lista</string>
+    <string name="preference_library_view_grid">Rutnät</string>
+
+    <string name="preference_use_album_artists_title">Använd albumartist-tagg</string>
+    <string name="preference_use_album_artists_text">Använd albumartist-tagg för artist lista (denna metod är långsammare
+        och kan resultera i felaktiga artistbilder).
+    </string>
+
+    <string name="preference_use_artist_sort_title">Använd artistsort-tagg</string>
+    <string name="preference_use_artist_sort_text">jnvänd artistsort-taggen (eller albumartistsort) om servern tillhandahåller
+        taggen.
+    </string>
+
+    <string name="preference_use_tags_in_filebrowser_title">Använd taggar i filhanterare</string>
+    <string name="preference_use_tags_in_filebrowser_text">Om de är tillgängliga, använd taggar i filhanterar istället för filnamn.
+	Inaktivera detta alternativ för att visa filnamn i filhanteraren.
+    </string>
+
+    <string name="preference_library_click_action_title">Åtgärd vid spårklick</string>
+    <string name="preference_library_click_action_summary">Välj åtgärd för språk i biblioteket</string>
+    <string name="preference_library_click_action_message">Välj standardåtgärden om du klickar på ett språk i 
+        bibliotekvyerna
+    </string>
+
+    <string name="preference_volume_control_title">Välj volymkontrollvy</string>
+    <string name="preference_volume_control_message">Välj volymkontrollvy</string>
+    <string name="preference_volume_control_summary">Välj typen av by som används för att kontrollera volymen för
+	musikuppspelningen
+    </string>
+
+    <string name="preference_volume_control_off">Av</string>
+    <string name="preference_volume_control_seekbar">Skjutreglage</string>
+    <string name="preference_volume_control_buttons">Knappar</string>
+
+    <string name="preference_generic_keep_display_on_title">Behåll skärmen på</string>
+    <string name="preference_generic_keep_display_on_text">Skärmen kommer att hållas aktiv så länge som användargränssnittet
+        är i förgrunden.
+    </string>
+
+    <string name="preference_generic_hardware_keys_title">Använd hårdvaruknappar</string>
+    <string name="preference_generic_hardware_keys_text">Använd enhetens hårdvaruknappar för att styla uppspelningen.
+    </string>
+
+    <string name="preference_volume_step_title">Stegstorlek för volym</string>
+    <string name="preference_volume_step_text">Storleken på volymstegen för hårdvaru- och mjukvaruvolymknappar.
+    </string>
+
+    <string name="volume_step_size_dialog_title">Steg storlek: %d%%</string>
+    <string name="volume_step_size_dialog_warning">Du VÄljer en stort värde som din volymstegsstorlek. Var rädd om
+        dina öron och din utrustning!
+    </string>
+
+    <string name="preference_show_notification_title">Visa aviseringar</string>
+    <string name="preference_show_notification_text">Visa en avisering när du lämnar huvudgränssnittet. Detta är
+        nödvändigt för att komponenten ska fungera. Om du klickar på ”anslut” på komponenten kommer aviseringen att
+	visas ändå.
+    </string>
+
+    <string name="preference_use_english_wikipedia_title">Använd engelska Wikipedia</string>
+    <string name="preference_use_english_wikipedia_text">Använd engelska Wikipedia för att slå upp sidor</string>
+
+    <string name="preference_show_playlist_sections_title">Visa avsnitt i spellistor</string>
+    <string name="preference_show_playlist_sections_text">Visa avsnitt med omslagsbilder i spellistvyer</string>
+
+    <string name="preference_category_design">Design</string>
+    <string name="preference_category_library">Bibliotek</string>
+    <string name="preference_category_controls">Kontroller</string>
+    <string name="preference_category_other">Annat</string>
+
+    <!-- artwork preferences -->
+    <string name="preference_artwork_album_provider_title">Leverantör av albumsomslag</string>
+    <string name="preference_artwork_album_provider_summary">Välj en leverantör av album omslag.</string>
+    <string name="preference_artwork_album_provider_message">Välj en leverantör av album omslag.</string>
+
+    <string name="provider_off">Av</string>
+
+    <string name="preference_artwork_artist_provider_title">Leverantör av artistbilder</string>
+    <string name="preference_artwork_artist_provider_summary">Välj en leverantör av artistbilder.</string>
+    <string name="preference_artwork_artist_provider_message">Välj en leverantör av artistbilder.</string>
+
+    <string name="preference_artwork_clear_artist">Rensa artistbilder</string>
+    <string name="preference_artwork_clear_artist_summary">Tar bort alla sparade bilder för artister.</string>
+    <string name="preference_artwork_clear_album">Rensa albumbilder</string>
+    <string name="preference_artwork_clear_album_summary">Tar bort alla sparade bilder för album.</string>
+
+    <string name="preference_artwork_clear_blocked_artist">Rensa blockerade artistbilder</string>
+    <string name="preference_artwork_clear_blocked_artist_summary">Tar bort alla poster för artister som sökts
+        efter men som inte hittats.
+    </string>
+    <string name="preference_artwork_clear_blocked_album">Rensa blockerade albumomslag</string>
+    <string name="preference_artwork_clear_blocked_album_summary">Tar bort alla poster för album som sökts efter
+        men som inte hittats.
+    </string>
+
+    <string name="preference_artwork_bulk_load">Försök att läsa in alla bilder för din databas.</string>
+    <string name="preference_artwork_bulk_load_summary">Detta kommer att läsa in många bilder. Du är härmed förvarnad
+        om att det kommer att ta tid. Det kan sluta med att du får en tillfällig hastighetsbegränsning av din leverantör.
+    </string>
+
+    <string name="preference_artwork_wifi_only_title">Använd endast WIFI för hämtning</string>
+    <string name="preference_artwork_wifi_only_text">Hämtning av omslag kommer endast utföras om enheten är
+        ansluten via WIFI.
+    </string>
+
+    <string name="preference_category_artwork_settings">Omslagsinställningar</string>
+    <string name="preference_category_artwork_database_cleanup">Databasrensning</string>
+    <string name="preference_category_artwork_other_actions">Andra åtgärder</string>
+
+    <string name="search_choice_track">Spår</string>
+    <string name="search_choice_album">Album</string>
+    <string name="search_choice_artist">Artist</string>
+    <string name="search_choice_file">Fil</string>
+    <string name="search_choice_everything">Allting</string>
+
+    <string name="welcome_dialog_title">Ingen profil hittades</string>
+    <string name="welcome_dialog_text">Denna app är en fjärrkontroll för MPD. Om du inte vet vad MPD är så är denna
+        app förmodligen meningslös för dig, förlåt :).\n\nFör att använda denna app lägg till en ny profile med knappen
+	lägg till i övre högra hörnet.\nDenna app kan kanske fungera med Mopidy som en MPD-klient, eller ej; ingen
+	användarsupport ges för Mopidy.\n\nOm du vill ha en musikspelare baserad på samma gränssnitt, prova Odyssey
+        (https://gitlab.com/gateship-one/odyssey).
+    </string>
+
+    <string name="bulk_download_notice_title">Bildhämtning</string>
+    <string name="bulk_download_notice_text">Att hämta en stor mängd bilder pressar servrarna för den tjänst du valt.
+        Det kan inträffa att lasten på servrarna förhindrar hämtning av bilder. Hämtaren kommer då att avbryta sin
+	åtgärd om den detekterar en överbelastning.\n\nVänligen överväg att donera till omslagstjänsterna.
+    </string>
+
+    <!-- About activity -->
+    <string name="artwork_provided_by">Omslag tillhandahållet av:</string>
+    <string name="acknowledgement_text">Ett stort tack till Frederik Lütkes för hans kontinuerliga tryck på att utveckla
+        musikspelaren Odyssey, som detta användargränssnitt baserats på.
+    </string>
+    <string name="license_text">Denna app är licensierad under licensen GPLv3.\nMaterialikonerna är licensierad under
+        licensen CC-BY av Google.
+    </string>
+    <string name="sources_text">Källkoden är tillgänglig via GitLab:\nhttps://gitlab.com/gateship-one/malp</string>
+    <string name="activity_about_version">Version:</string>
+
+    <!-- Bulk downloader service -->
+    <string name="downloader_notification_title">Masshämtning kör</string>
+    <string name="downloader_notification_remaining_images">Bilder hämtade:</string>
+    <string name="downloader_notification_initialize">Initiera hämtning</string>
+
+    <string name="notification_channel_name_playback">Uppspelning</string>
+    <string name="notification_channel_name_bulk_download">Masshämtare</string>
+
+    <!-- Widget -->
+    <string name="widget_disconnected">Frånkopplad</string>
+    <string name="widget_connect">Ansluten</string>
+
+    <!-- Contributors activity -->
+    <string name="contributors_title">Contributors</string>
+    <string name="contributor_translator_japanese">Japansk översättning</string>
+    <string name="contributor_translator_french">Fransk översättning</string>
+    <string name="contributor_translator_spanish">Spanish översättning</string>
+    <string name="contributor_translator_korean">Koreansk översättning</string>
+    <string name="contributor_translator_hungarian">Ungersk översättning</string>
+    <string name="contributor_translator_swedish">Svensk översättning</string>
+
+    <!-- Thirdparty Licenses dialog -->
+    <string name="thirdparty_licenses_dialog_title">Tredjepartslicenser</string>
+
+    <!-- templates -->
+
+    <string name="bitrate_unit_kilo_bits_template">%1$d kbps</string>
+    <string name="sampleformat_unit_bits_template">%1$s bitar</string>
+    <string name="channels_template">%1$d kanaler</string>
+</resources>

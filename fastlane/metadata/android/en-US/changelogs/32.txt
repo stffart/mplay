@@ -1,0 +1,2 @@
+* further improvements for the artwork retrieval
+* add prepend to playlist action

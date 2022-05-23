@@ -1,0 +1,2 @@
+ * VERY EXPERIMENTAL: MPD inline artwork support. (MPD 0.21 and newer can directly feed MALP album cover artwork over the MPD protocol)
+ * HTTP-based cover downloading path encoding fixed (#118)
