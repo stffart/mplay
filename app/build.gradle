@@ -40,18 +40,13 @@ android {
 
 
     signingConfigs {
-        config {
-            if (keystorePropertiesFile.exists()) {
-                // load keystore file
-                Properties keystoreProperties = new Properties()
-                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
+            config {
+                storeFile file('keystore/mplay_keystore.keystore')
+                storePassword System.getenv('KEYSTORE_PASSWORD')
+                keyAlias = 'app_sign_key'
+                keyPassword System.getenv('KEYSTORE_PASSWORD')
             }
-        }
+
     }
     compileSdkVersion 31
     defaultConfig {
