@@ -33,6 +33,9 @@ def getGitCommitHash = { ->
 }
 
 android {
+    lintOptions {
+        disable 'MissingDefaultResource'
+    }
     File keystorePropertiesFile = rootProject.file("keystore.properties")
 
 
