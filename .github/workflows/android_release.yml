@@ -6,6 +6,9 @@ on:
 
 name: Create Release
 
+env:
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+
 jobs:
   build:
     name: Create Release
