@@ -28,7 +28,7 @@ import android.view.LayoutInflater;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 
 public class OutputListItem extends LinearLayout {
 

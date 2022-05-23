@@ -28,7 +28,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.artwork.network.artprovider.FanartProvider;
 import org.mopidy.mplay.application.artwork.network.artprovider.FanartTVProvider;
 import org.mopidy.mplay.application.utils.NetworkUtils;

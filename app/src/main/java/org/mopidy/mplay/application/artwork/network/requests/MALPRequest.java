@@ -26,7 +26,7 @@ package org.mopidy.mplay.application.artwork.network.requests;
 import com.android.volley.Request;
 import com.android.volley.Response;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -42,7 +42,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.ScrollSpeedAdapter;
 import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.utils.AsyncLoader;

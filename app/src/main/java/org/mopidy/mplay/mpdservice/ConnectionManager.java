@@ -28,8 +28,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.gateshipone.mplay.BuildConfig;
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
+import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.application.artwork.network.artprovider.HTTPAlbumImageProvider;
 import org.mopidy.mplay.application.artwork.network.artprovider.MPDAlbumImageProvider;
 import org.mopidy.mplay.application.background.BackgroundService;

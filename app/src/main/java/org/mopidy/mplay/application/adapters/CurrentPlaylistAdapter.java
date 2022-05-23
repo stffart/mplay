@@ -33,8 +33,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import org.gateshipone.mplay.BuildConfig;
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.BuildConfig;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.listviewitems.FileListItem;
 import org.mopidy.mplay.mpdservice.handlers.MPDConnectionStateChangeHandler;

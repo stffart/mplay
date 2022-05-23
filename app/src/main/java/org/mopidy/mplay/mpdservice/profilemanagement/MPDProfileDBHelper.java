@@ -27,7 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 public class MPDProfileDBHelper extends SQLiteOpenHelper {
     private static final String TAG = MPDProfileManager.class.getSimpleName();

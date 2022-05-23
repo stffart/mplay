@@ -48,7 +48,7 @@ import androidx.core.content.ContextCompat;
 import androidx.media.VolumeProviderCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.activities.MainActivity;
 import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.utils.CoverBitmapLoader;

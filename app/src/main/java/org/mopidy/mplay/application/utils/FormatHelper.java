@@ -25,7 +25,7 @@ package org.mopidy.mplay.application.utils;
 
 import android.content.Context;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 
 import java.text.DateFormat;
 import java.util.Date;

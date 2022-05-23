@@ -45,7 +45,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.FileAdapter;
 import org.mopidy.mplay.application.callbacks.AddPathToPlaylist;
 import org.mopidy.mplay.application.callbacks.PlaylistCallback;

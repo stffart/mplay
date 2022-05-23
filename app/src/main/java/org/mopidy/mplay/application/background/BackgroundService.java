@@ -36,7 +36,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.mpdservice.ConnectionManager;
 import org.mopidy.mplay.mpdservice.handlers.MPDConnectionStateChangeHandler;
 import org.mopidy.mplay.mpdservice.handlers.MPDStatusChangeHandler;

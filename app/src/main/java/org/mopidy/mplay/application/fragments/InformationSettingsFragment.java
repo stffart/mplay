@@ -28,7 +28,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceFragmentCompat;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.callbacks.FABFragmentCallback;
 
 public class InformationSettingsFragment extends PreferenceFragmentCompat {

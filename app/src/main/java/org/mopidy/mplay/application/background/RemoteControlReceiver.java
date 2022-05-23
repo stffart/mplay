@@ -29,7 +29,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 public class RemoteControlReceiver extends BroadcastReceiver {
     private static final String TAG = RemoteControlReceiver.class.getSimpleName();

@@ -34,7 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.utils.FormatHelper;
 import org.mopidy.mplay.application.viewmodels.GenericViewModel;
 import org.mopidy.mplay.application.viewmodels.StatisticsViewModel;

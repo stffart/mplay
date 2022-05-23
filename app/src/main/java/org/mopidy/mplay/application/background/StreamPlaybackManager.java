@@ -28,7 +28,7 @@ import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.util.Log;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 import java.io.IOException;
 

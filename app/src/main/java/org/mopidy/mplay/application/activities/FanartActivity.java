@@ -38,7 +38,7 @@ import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.artwork.FanartManager;
 import org.mopidy.mplay.application.artwork.network.MALPRequestQueue;
 import org.mopidy.mplay.application.artwork.network.requests.FanartImageRequest;

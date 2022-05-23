@@ -38,6 +38,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="org.mopidy.mplay.application.activities.AboutActivity"
-            android:targetPackage="org.gateshipone.mplay" />
+            android:targetPackage="org.mopidy.mplay" />
     </Preference>
 </PreferenceScreen>

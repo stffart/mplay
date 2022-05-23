@@ -43,7 +43,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.ProfileAdapter;
 import org.mopidy.mplay.application.callbacks.FABFragmentCallback;
 import org.mopidy.mplay.application.callbacks.ProfileManageCallbacks;

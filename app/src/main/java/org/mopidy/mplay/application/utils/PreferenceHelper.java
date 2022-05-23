@@ -26,7 +26,7 @@ package org.mopidy.mplay.application.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDAlbum;
 
 public class PreferenceHelper {

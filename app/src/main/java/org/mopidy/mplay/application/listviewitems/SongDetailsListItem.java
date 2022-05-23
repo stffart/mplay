@@ -27,7 +27,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 
 public class SongDetailsListItem extends LinearLayout {
 

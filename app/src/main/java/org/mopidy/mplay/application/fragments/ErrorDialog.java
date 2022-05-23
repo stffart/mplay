@@ -31,7 +31,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 
 public class ErrorDialog extends DialogFragment {
 

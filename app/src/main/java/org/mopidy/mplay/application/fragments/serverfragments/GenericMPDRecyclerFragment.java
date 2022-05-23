@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.GenericRecyclerViewAdapter;
 import org.mopidy.mplay.application.utils.GridItemDecoration;
 import org.mopidy.mplay.application.views.MalpRecyclerView;

@@ -25,7 +25,7 @@ package org.mopidy.mplay.application;
 import android.app.Application;
 import android.os.StrictMode;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 public class MPlayApplication extends Application {
 

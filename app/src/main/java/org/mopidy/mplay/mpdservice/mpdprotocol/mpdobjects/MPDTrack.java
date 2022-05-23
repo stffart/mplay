@@ -29,7 +29,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.CurrentPlaylistAdapter;
 
 import java.util.HashMap;

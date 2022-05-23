@@ -22,7 +22,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.gateshipone.mplay">
+    package="org.mopidy.mplay">
 
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -54,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.mopidy.mplay.mplay.application.activities.AboutActivity"
+            android:name="org.mopidy.mplay.application.activities.AboutActivity"
             android:label="About"
             android:parentActivityName="org.mopidy.mplay.application.activities.MainActivity">
         </activity>

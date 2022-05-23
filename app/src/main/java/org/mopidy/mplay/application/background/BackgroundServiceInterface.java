@@ -25,7 +25,7 @@ package org.mopidy.mplay.application.background;
 import android.os.Message;
 import android.os.RemoteException;
 
-import org.gateshipone.mplay.application.background.IBackgroundService;
+import org.mopidy.mplay.application.background.IBackgroundService;
 
 import java.lang.ref.WeakReference;
 

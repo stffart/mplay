@@ -26,7 +26,7 @@ package org.mopidy.mplay.application.artwork;
 import android.content.Context;
 import android.util.Log;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 import java.io.File;
 import java.io.FileNotFoundException;

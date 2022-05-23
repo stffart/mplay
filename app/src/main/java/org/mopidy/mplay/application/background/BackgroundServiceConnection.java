@@ -30,7 +30,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import org.gateshipone.mplay.application.background.IBackgroundService;
+import org.mopidy.mplay.application.background.IBackgroundService;
 
 /**
  * {@link ServiceConnection} class to allow connection between the UI and the BackgroundService.

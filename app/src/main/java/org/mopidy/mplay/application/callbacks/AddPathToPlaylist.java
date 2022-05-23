@@ -26,7 +26,7 @@ import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.fragments.TextDialog;
 import org.mopidy.mplay.mpdservice.handlers.serverhandler.MPDQueryHandler;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDFileEntry;

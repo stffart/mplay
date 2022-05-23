@@ -28,8 +28,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.gateshipone.mplay.BuildConfig;
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.BuildConfig;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.fragments.ErrorDialog;
 import org.mopidy.mplay.application.fragments.LicensesDialog;
 import org.mopidy.mplay.application.utils.ThemeUtils;

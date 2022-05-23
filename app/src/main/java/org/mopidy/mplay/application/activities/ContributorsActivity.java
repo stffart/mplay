@@ -27,7 +27,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.utils.ThemeUtils;
 import org.mopidy.mplay.mpdservice.mpdprotocol.MPDException;
 

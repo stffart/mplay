@@ -27,7 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 
 public class BackgroundServiceHandler extends Handler {
     private static final String TAG = BackgroundServiceHandler.class.getSimpleName();

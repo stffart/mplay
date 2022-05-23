@@ -35,7 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.background.BackgroundService;
 import org.mopidy.mplay.application.background.BackgroundServiceConnection;
 import org.mopidy.mplay.application.utils.HardwareKeyHandler;

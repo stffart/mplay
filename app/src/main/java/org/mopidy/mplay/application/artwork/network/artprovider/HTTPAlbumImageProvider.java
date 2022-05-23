@@ -37,7 +37,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.application.artwork.network.ArtworkRequestModel;
 import org.mopidy.mplay.application.artwork.network.requests.MALPByteRequest;
 import org.mopidy.mplay.application.artwork.network.responses.ImageResponse;

@@ -28,7 +28,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.mpdservice.handlers.MPDConnectionErrorHandler;
 import org.mopidy.mplay.mpdservice.mpdprotocol.MPDException;
 import org.mopidy.mplay.mpdservice.websocket.WSInterface;

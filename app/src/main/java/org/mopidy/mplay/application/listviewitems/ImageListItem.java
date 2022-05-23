@@ -26,7 +26,7 @@ package org.mopidy.mplay.application.listviewitems;
 import android.content.Context;
 import android.widget.TextView;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.ScrollSpeedAdapter;
 
 public class ImageListItem extends AbsImageListViewItem {

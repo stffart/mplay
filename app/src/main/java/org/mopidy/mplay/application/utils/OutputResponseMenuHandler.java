@@ -30,7 +30,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.mpdservice.handlers.responsehandler.MPDResponseOutputList;
 import org.mopidy.mplay.mpdservice.handlers.serverhandler.MPDCommandHandler;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDOutput;

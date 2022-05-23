@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.listviewitems.GenericGridItem;
 import org.mopidy.mplay.application.listviewitems.ImageListItem;

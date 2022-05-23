@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.utils.PreferenceHelper;
 import org.mopidy.mplay.mpdservice.handlers.responsehandler.MPDResponseAlbumList;
 import org.mopidy.mplay.mpdservice.handlers.serverhandler.MPDQueryHandler;

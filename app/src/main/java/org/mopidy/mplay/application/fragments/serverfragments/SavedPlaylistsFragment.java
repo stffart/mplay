@@ -41,7 +41,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.FileAdapter;
 import org.mopidy.mplay.application.callbacks.PlaylistCallback;
 import org.mopidy.mplay.application.utils.ThemeUtils;

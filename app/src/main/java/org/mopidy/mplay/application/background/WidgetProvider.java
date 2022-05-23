@@ -34,7 +34,7 @@ import android.os.Build;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.activities.MainActivity;
 import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.utils.CoverBitmapLoader;

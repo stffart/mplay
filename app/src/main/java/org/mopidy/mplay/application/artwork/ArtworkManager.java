@@ -36,8 +36,8 @@ import android.util.Log;
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 
-import org.gateshipone.mplay.BuildConfig;
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.BuildConfig;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.artwork.network.ArtworkRequestModel;
 import org.mopidy.mplay.application.artwork.network.InsertImageTask;
 import org.mopidy.mplay.application.artwork.network.MALPRequestQueue;

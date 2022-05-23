@@ -43,7 +43,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.callbacks.FABFragmentCallback;
 
 public class ServerPropertiesFragment extends Fragment implements TabLayout.OnTabSelectedListener {

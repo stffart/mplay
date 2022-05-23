@@ -30,7 +30,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.CurrentPlaylistAdapter;
 import org.mopidy.mplay.application.utils.ScrollSpeedListener;
 import org.mopidy.mplay.mpdservice.handlers.serverhandler.MPDCommandHandler;

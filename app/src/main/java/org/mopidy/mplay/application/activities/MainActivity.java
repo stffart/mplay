@@ -58,7 +58,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.CurrentPlaylistAdapter;
 import org.mopidy.mplay.application.callbacks.AddPathToPlaylist;
 import org.mopidy.mplay.application.callbacks.AlbumCallback;

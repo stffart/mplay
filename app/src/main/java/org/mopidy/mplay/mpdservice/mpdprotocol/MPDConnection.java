@@ -28,7 +28,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.mpdservice.handlers.MPDConnectionStateChangeHandler;
 import org.mopidy.mplay.mpdservice.handlers.MPDIdleChangeHandler;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDAlbum;

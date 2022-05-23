@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.listviewitems.AbsImageListViewItem;
 import org.mopidy.mplay.application.listviewitems.FileListItem;

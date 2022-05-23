@@ -29,7 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 
 public class ProfileListItem extends LinearLayout {
 

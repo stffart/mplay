@@ -38,7 +38,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.adapters.ScrollSpeedAdapter;
 import org.mopidy.mplay.application.utils.FormatHelper;
 import org.mopidy.mplay.application.utils.ThemeUtils;

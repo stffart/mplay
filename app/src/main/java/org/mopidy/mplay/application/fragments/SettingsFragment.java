@@ -35,7 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.activities.MainActivity;
 import org.mopidy.mplay.application.callbacks.FABFragmentCallback;
 import org.mopidy.mplay.application.utils.ThemeUtils;

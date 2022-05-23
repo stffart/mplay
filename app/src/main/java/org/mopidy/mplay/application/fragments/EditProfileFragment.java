@@ -44,7 +44,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.gateshipone.mplay.R;
+import org.mopidy.mplay.R;
 import org.mopidy.mplay.application.callbacks.FABFragmentCallback;
 import org.mopidy.mplay.application.utils.ThemeUtils;
 import org.mopidy.mplay.mpdservice.ConnectionManager;

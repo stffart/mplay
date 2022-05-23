@@ -29,7 +29,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.gateshipone.mplay.BuildConfig;
+import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.application.artwork.network.ArtworkRequestModel;
 import org.mopidy.mplay.application.artwork.network.MALPRequestQueue;
 import org.mopidy.mplay.application.artwork.network.requests.MALPByteRequest;
