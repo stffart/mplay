@@ -19,6 +19,18 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
-
-    - name: Build with Gradle
-      run: gradle build
+    - name: Build release APK and AAB after test
+      run: |
+         gradle assembleRelease
+         gradle bundleRelease
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+         name: app-release.apk
+         path: app/build/outputs/apk/release/app-release-unsigned.apk
+    - name: Upload AAB Bundle
+      uses: actions/upload-artifact@v2
+      with:
+         name: app-release.aab
+         path: app/build/outputs/bundle/release/app-release.aab
+       
