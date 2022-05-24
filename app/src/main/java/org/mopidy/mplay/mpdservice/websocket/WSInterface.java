@@ -261,7 +261,7 @@ public class WSInterface  {
     }
 
     public MPDCapabilities getServerCapabilities() {
-        MPDCapabilities caps = new MPDCapabilities("17.1", null, null);
+        MPDCapabilities caps = new MPDCapabilities("17.1.0", null, null);
         return caps;
     }
 

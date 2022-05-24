@@ -30,6 +30,7 @@ import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.DrawFilter;
@@ -43,6 +44,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.media.VolumeProviderCompat;
@@ -149,7 +151,12 @@ public class NotificationManager implements CoverBitmapLoader.CoverBitmapListene
 
         if (null != mNotification) {
             // Change to foreground service otherwise android will just kill it
-            mService.startForeground(NOTIFICATION_ID, mNotification);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                mService.startForeground(NOTIFICATION_ID, mNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
+            } else {
+                mService.startForeground(NOTIFICATION_ID, mNotification);
+
+            }
         }
     }
 

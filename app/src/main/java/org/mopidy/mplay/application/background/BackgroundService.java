@@ -63,12 +63,12 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
     /**
      * Control actions for the MPD service
      */
-    public static final String ACTION_LIKE = "org.gateshipone.malp.widget.like";
-    public static final String ACTION_PLAY = "org.gateshipone.malp.widget.play";
-    public static final String ACTION_PAUSE = "org.gateshipone.malp.widget.pause";
-    public static final String ACTION_STOP = "org.gateshipone.malp.widget.stop";
-    public static final String ACTION_NEXT = "org.gateshipone.malp.widget.next";
-    public static final String ACTION_PREVIOUS = "org.gateshipone.malp.widget.previous";
+    public static final String ACTION_LIKE = "org.mopidy.malp.widget.like";
+    public static final String ACTION_PLAY = "org.mopidy.malp.widget.play";
+    public static final String ACTION_PAUSE = "org.mopidy.malp.widget.pause";
+    public static final String ACTION_STOP = "org.mopidy.malp.widget.stop";
+    public static final String ACTION_NEXT = "org.mopidy.malp.widget.next";
+    public static final String ACTION_PREVIOUS = "org.mopidy.malp.widget.previous";
 
     /**
      * Management actions for the MPD service
@@ -76,71 +76,71 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
     /**
      * Requests the service to connect to the MPD server
      */
-    public static final String ACTION_CONNECT = "org.gateshipone.malp.widget.connect";
+    public static final String ACTION_CONNECT = "org.mopidy.malp.widget.connect";
     /**
      * Requests the service to disconnect from the MPD server
      */
-    public static final String ACTION_DISCONNECT = "org.gateshipone.malp.widget.disconnect";
+    public static final String ACTION_DISCONNECT = "org.mopidy.malp.widget.disconnect";
     /**
      * Notifies the service that the default profile changed. It will reread the profile
      * database and try to reconnect to the new default profile.
      */
-    public static final String ACTION_PROFILE_CHANGED = "org.gateshipone.malp.widget.profile_changed";
+    public static final String ACTION_PROFILE_CHANGED = "org.mopidy.malp.widget.profile_changed";
 
     /**
      * Sent if a new song is played by the MPD server. This needs to be catched by the widget provider
      * to show new information.
      */
-    public static final String ACTION_TRACK_CHANGED = "org.gateshipone.malp.widget.track_changed";
+    public static final String ACTION_TRACK_CHANGED = "org.mopidy.malp.widget.track_changed";
 
     /**
      * Sent if the MPD server status changes. This needs to be catched by the widget provider to show
      * correct information.
      */
-    public static final String ACTION_STATUS_CHANGED = "org.gateshipone.malp.widget.status_changed";
+    public static final String ACTION_STATUS_CHANGED = "org.mopidy.malp.widget.status_changed";
 
     /**
      * Sent if the MPD server is disconnected. This needs to be catched by the widget provider to show
      * correct information.
      */
-    public static final String ACTION_SERVER_DISCONNECTED = "org.gateshipone.malp.widget.server_disconnected";
+    public static final String ACTION_SERVER_DISCONNECTED = "org.mopidy.malp.widget.server_disconnected";
 
     /**
      * Extra attached to an {@link Intent} containing the {@link MPDTrack} that is playing on the server
      */
-    public static final String INTENT_EXTRA_TRACK = "org.gateshipone.malp.widget.extra.track";
+    public static final String INTENT_EXTRA_TRACK = "org.mopidy.malp.widget.extra.track";
 
     /**
      * Shows the notification
      */
-    public static final String ACTION_SHOW_NOTIFICATION = "org.gateshipone.malp.notification.show";
+    public static final String ACTION_SHOW_NOTIFICATION = "org.mopidy.malp.notification.show";
 
     /**
      * Hides the notification if it is currently visible
      */
-    public static final String ACTION_HIDE_NOTIFICATION = "org.gateshipone.malp.notification.hide";
+    public static final String ACTION_HIDE_NOTIFICATION = "org.mopidy.malp.notification.hide";
 
     /**
      * Notifies the service that the user has dismissed the notification
      */
-    public static final String ACTION_QUIT_BACKGROUND_SERVICE = "org.gateshipone.malp.background.quit";
+    public static final String ACTION_QUIT_BACKGROUND_SERVICE = "org.mopidy.malp.background.quit";
 
-    public static final String ACTION_START_MPD_STREAM_PLAYBACK = "org.gateshipone.malp.stream.play";
+    public static final String ACTION_START_MPD_STREAM_PLAYBACK = "org.mopidy.malp.stream.play";
 
     /**
      * Extra attached to an {@link Intent} containing the current MPD server status
      */
-    public static final String INTENT_EXTRA_STATUS = "org.gateshipone.malp.widget.extra.status";
+    public static final String INTENT_EXTRA_STATUS = "org.mopidy.malp.widget.extra.status";
 
     /**
      * Notification about a change in status of remote stream playback on the android device.
      */
-    public static final String ACTION_STREAMING_STATUS_CHANGED = "org.gateshipone.malp.streaming.status_changed";
+    public static final String ACTION_STREAMING_STATUS_CHANGED = "org.mopidy.malp.streaming.status_changed";
 
     /**
      * Contains the status as an STREAMING_STATUS enum value.
      */
-    public static final String INTENT_EXTRA_STREAMING_STATUS = "org.gateshipone.malp.streaming.extra.status";
+    public static final String INTENT_EXTRA_STREAMING_STATUS = "org.mopidy.malp.streaming.extra.status";
 
     private boolean mIsDucked = false;
 
