@@ -430,9 +430,11 @@ public class MainActivity extends GenericActivity
         } else if (id == R.id.nav_app_settings) {
             fragment = SettingsFragment.newInstance();
             fragmentTag = SettingsFragment.TAG;
+            /*
         } else if (id == R.id.nav_server_properties) {
             fragment = ServerPropertiesFragment.newInstance();
             fragmentTag = ServerPropertiesFragment.TAG;
+             */
         } else if (id == R.id.nav_information) {
             fragment = InformationSettingsFragment.newInstance();
             fragmentTag = InformationSettingsFragment.class.getSimpleName();
@@ -442,10 +444,11 @@ public class MainActivity extends GenericActivity
         drawer.closeDrawer(GravityCompat.START);
 
         // Do the actual fragment transaction
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment, fragmentTag);
-        transaction.commit();
-
+        if (fragment != null) {
+            final FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment, fragmentTag);
+            transaction.commit();
+        }
         return true;
     }
 
@@ -912,11 +915,13 @@ public class MainActivity extends GenericActivity
         String defaultView = sharedPref.getString(getString(R.string.pref_start_view_key), getString(R.string.pref_view_default));
 
         // the default tab for mymusic
-        MyMusicTabsFragment.DEFAULTTAB defaultTab = MyMusicTabsFragment.DEFAULTTAB.ALBUMS;
+        MyMusicTabsFragment.DEFAULTTAB defaultTab;
 
         if (defaultView.equals(getString(R.string.pref_view_my_music_artists_key))) {
             defaultTab = MyMusicTabsFragment.DEFAULTTAB.ARTISTS;
         } else if (defaultView.equals(getString(R.string.pref_view_my_music_albums_key))) {
+            defaultTab = MyMusicTabsFragment.DEFAULTTAB.ALBUMS;
+        } else {
             defaultTab = MyMusicTabsFragment.DEFAULTTAB.ALBUMS;
         }
 
