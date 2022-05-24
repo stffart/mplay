@@ -80,7 +80,7 @@ import org.mopidy.mplay.application.fragments.serverfragments.MyMusicTabsFragmen
 import org.mopidy.mplay.application.fragments.serverfragments.PlaylistTracksFragment;
 import org.mopidy.mplay.application.fragments.serverfragments.SavedPlaylistsFragment;
 import org.mopidy.mplay.application.fragments.serverfragments.SearchFragment;
-import org.mopidy.mplay.application.fragments.serverfragments.ServerPropertiesFragment;
+//import org.mopidy.mplay.application.fragments.serverfragments.ServerPropertiesFragment;
 import org.mopidy.mplay.application.fragments.serverfragments.SongDetailsDialog;
 import org.mopidy.mplay.application.utils.ThemeUtils;
 import org.mopidy.mplay.application.views.CurrentPlaylistView;
@@ -110,7 +110,6 @@ public class MainActivity extends GenericActivity
     private static final String MAINACTIVITY_SAVED_INSTANCE_NOW_PLAYING_VIEW_SWITCHER_CURRENT_VIEW = "MainActivity.NowPlayingViewSwitcherCurrentView";
 
     private DRAG_STATUS mNowPlayingDragStatus;
-    private DRAG_STATUS mSavedNowPlayingDragStatus = null;
 
     public enum REQUESTEDVIEW {
         NONE,
@@ -137,7 +136,6 @@ public class MainActivity extends GenericActivity
 
         // restore drag state
         if (savedInstanceState != null) {
-            mSavedNowPlayingDragStatus = DRAG_STATUS.values()[savedInstanceState.getInt(MAINACTIVITY_SAVED_INSTANCE_NOW_PLAYING_DRAG_STATUS)];
             mSavedNowPlayingViewSwitcherStatus = VIEW_SWITCHER_STATUS.values()[savedInstanceState.getInt(MAINACTIVITY_SAVED_INSTANCE_NOW_PLAYING_VIEW_SWITCHER_CURRENT_VIEW)];
         } else {
             // if no savedInstanceState is present the activity is started for the first time so check the intent
