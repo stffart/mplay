@@ -40,6 +40,8 @@ import org.mopidy.mplay.application.artwork.ArtworkManager;
 import org.mopidy.mplay.application.utils.CoverBitmapLoader;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDCurrentStatus;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDTrack;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
 
 import java.lang.ref.WeakReference;
 
@@ -52,6 +54,7 @@ public class WidgetProvider extends AppWidgetProvider {
     private static MPDTrack mLastTrack;
     private static MPDCurrentStatus mLastStatus;
     private static Bitmap mLastCover = null;
+    private static MPDServerProfile mLastProfile;
 
 
     /**
@@ -95,6 +98,7 @@ public class WidgetProvider extends AppWidgetProvider {
         super.onDisabled(context);
         mLastTrack = null;
         mLastStatus = null;
+        mLastProfile = null;
     }
 
 
@@ -116,6 +120,8 @@ public class WidgetProvider extends AppWidgetProvider {
 
             views.setTextViewText(R.id.widget_big_ArtistAlbum, mLastTrack.getSubLine(context));
 
+            if (mLastProfile != null)
+                views.setTextViewText(R.id.widget_big_current_profile, "@ "+mLastProfile.getProfileName());
             if (mLastCover != null) {
                 // Use the saved image
                 views.setImageViewBitmap(R.id.widget_big_cover, mLastCover);
@@ -233,6 +239,18 @@ public class WidgetProvider extends AppWidgetProvider {
 
         // Type checks
         switch (action) {
+            case BackgroundService.ACTION_PROFILE_CHANGED:
+
+                // Extract the payload from the intent
+                MPDServerProfile profile = intent.getParcelableExtra(BackgroundService.INTENT_EXTRA_PROFILE);
+
+                // Check if a payload was sent
+                if (null != profile) {
+                    // Save the information for later usage (when the asynchronous bitmap loader finishes)
+                    mLastProfile = profile;
+                }
+                break;
+
             case BackgroundService.ACTION_STATUS_CHANGED:
 
                 // Extract the payload from the intent

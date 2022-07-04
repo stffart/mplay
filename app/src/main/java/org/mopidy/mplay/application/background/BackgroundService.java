@@ -99,6 +99,7 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
      */
     public static final String ACTION_STATUS_CHANGED = "org.mopidy.malp.widget.status_changed";
 
+
     /**
      * Sent if the MPD server is disconnected. This needs to be catched by the widget provider to show
      * correct information.
@@ -131,6 +132,8 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
      * Extra attached to an {@link Intent} containing the current MPD server status
      */
     public static final String INTENT_EXTRA_STATUS = "org.mopidy.malp.widget.extra.status";
+
+    public static final String INTENT_EXTRA_PROFILE = "org.mopidy.malp.widget.extra.profile";
 
     /**
      * Notification about a change in status of remote stream playback on the android device.
@@ -417,6 +420,7 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
         onMPDDisconnect();
         MPDServerProfile profile = MPDProfileManager.getInstance(this).getAutoconnectProfile();
         ConnectionManager.getInstance(getApplicationContext()).setParameters(profile, this);
+        notifyNewProfile(profile);
     }
 
     @Override
@@ -497,6 +501,14 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
         intent.putExtra(INTENT_EXTRA_STATUS, status);
         sendBroadcast(intent);
     }
+
+    private void notifyNewProfile(MPDServerProfile profile) {
+        Intent intent = new Intent(getApplicationContext(), WidgetProvider.class);
+        intent.setAction(ACTION_PROFILE_CHANGED);
+        intent.putExtra(INTENT_EXTRA_PROFILE, profile);
+        sendBroadcast(intent);
+    }
+
 
     /**
      * Ensures an MPD server is connected before performing an action.
