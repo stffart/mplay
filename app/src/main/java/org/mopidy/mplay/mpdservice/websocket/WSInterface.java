@@ -83,19 +83,39 @@ import org.mopidy.mplay.mpdservice.websocket.types.responses.JSONTLTrackResponse
 import org.mopidy.mplay.mpdservice.websocket.types.responses.JSONTLTracksResponse;
 import org.mopidy.mplay.mpdservice.websocket.types.JSONTrack;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import kotlin.RequiresOptIn;
 
 
 public class WSInterface  {
@@ -109,6 +129,7 @@ public class WSInterface  {
     private static int mPort;
     private static String mPassword;
     private static String mLogin;
+    private static String mToken = "";
 
     private MPDCache mCache;
 
@@ -218,6 +239,64 @@ public class WSInterface  {
                 break;
         }
     }
+    TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(
+                        java.security.cert.X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(
+                        java.security.cert.X509Certificate[] certs, String authType) {
+                }
+            }
+    };
+    HostnameVerifier allHostsValid = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+
+    private String getToken() throws KeyManagementException, IOException, NoSuchAlgorithmException {
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        URL loginURL = new URL("https://"+mHostname+":"+String.valueOf(mPort)+"/login");
+        HttpsURLConnection conn = (HttpsURLConnection) loginURL.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.setUseCaches(false);
+        conn.setInstanceFollowRedirects(false);
+        conn.setHostnameVerifier(allHostsValid);
+        Map<String,Object> params = new LinkedHashMap<>();
+        params.put("login", mLogin);
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String,Object> param : params.entrySet()) {
+            if (postData.length() != 0) postData.append('&');
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+        }
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        int postLength = postDataBytes.length;
+
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty( "Content-Length", Integer.toString( postLength ));
+        try(OutputStream os = conn.getOutputStream()) {
+            os.write(postDataBytes);
+            os.flush();
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String answer = br.readLine();
+        Map<String, List<String>> headerFields = conn.getHeaderFields();
+        List<String> cookie = headerFields.get("Set-Cookie");
+        String cookieParams = cookie.get(0).split("\"")[1];
+        Logger.getLogger("test").log(Level.SEVERE, cookieParams.toString());
+        return cookieParams;
+    }
 
     private void setInstanceServerParameters(String hostname, String login, String password, int port) {
         mCache = new MPDCache(0);
@@ -232,20 +311,18 @@ public class WSInterface  {
             if (mHostname == null) return;
             if (mHostname.isEmpty()) return;
             mAddListenerLatch = true;
+            String protocol = "ws";
 
             if(!mLogin.isEmpty()) {
-
-                URL loginURL = new URL("https://+"+mHostname+":"+String.valueOf(mPort)+"/login");
-                HttpURLConnection conn = (HttpURLConnection) loginURL.openConnection();
-                conn.setRequestMethod("POST");
-                try(OutputStream os = conn.getOutputStream()) {
-                    byte[] b = ("login="+mLogin).getBytes();
-                    os.write(b);
-                }
-                Map<String, List<String>> headerFields = conn.getHeaderFields();
+                mToken = getToken();
+                protocol = "wss";
             }
-            this.mConnection = factory.createSocket("ws://"+mHostname+":"+String.valueOf(mPort)+"/mopidy/ws");
-
+            factory.setVerifyHostname(false);
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            factory.setSSLContext(sc);
+            this.mConnection = factory.createSocket(protocol+"://"+mHostname+":"+String.valueOf(mPort)+"/mopidy/ws");
+            this.mConnection.addHeader("Cookie", "moclauth="+mToken);
             for (WSConnectionStateChangeListener listener: listeners)
                 mConnection.addListener(listener);
             mAddListenerLatch = false;
@@ -265,6 +342,10 @@ public class WSInterface  {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
             e.printStackTrace();
         }
     }

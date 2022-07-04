@@ -150,9 +150,9 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
     }
 
     public void autoConnect(Context context) {
-        //mConnectionManager.mServerProfile = MPDProfileManager.getInstance(context).getAutoconnectProfile();
+        mConnectionManager.mServerProfile = MPDProfileManager.getInstance(context).getAutoconnectProfile();
 
-        //setParameters(mConnectionManager.mServerProfile, context);
+        setParameters(mConnectionManager.mServerProfile, context);
     }
 
     private synchronized void increaseMPDUse(Context context) {

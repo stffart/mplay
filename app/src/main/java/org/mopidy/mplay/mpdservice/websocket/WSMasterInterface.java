@@ -39,13 +39,30 @@ import org.mopidy.mplay.mpdservice.websocket.types.JSONDevice;
 import org.mopidy.mplay.mpdservice.websocket.types.JSONMasterRequest;
 import org.mopidy.mplay.mpdservice.websocket.types.responses.JSONMasterResponse;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class WSMasterInterface {
     private static final String TAG = WSInterface.class.getSimpleName();
@@ -60,6 +77,7 @@ public class WSMasterInterface {
 
     private List<WSConnectionStateChangeListener> listeners = new ArrayList<WSConnectionStateChangeListener>();
     private boolean mAddListenerLatch = false;
+    private String mToken = "";
 
     public static synchronized WSMasterInterface getGenericInstance() {
         if (mGenericInterface == null) {
@@ -165,6 +183,64 @@ public class WSMasterInterface {
         }
     }
 
+    TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(
+                        java.security.cert.X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(
+                        java.security.cert.X509Certificate[] certs, String authType) {
+                }
+            }
+    };
+    HostnameVerifier allHostsValid = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+    private String getToken() throws KeyManagementException, IOException, NoSuchAlgorithmException {
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        URL loginURL = new URL("https://"+mHostname+":"+String.valueOf(mPort)+"/login");
+        HttpsURLConnection conn = (HttpsURLConnection) loginURL.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.setUseCaches(false);
+        conn.setInstanceFollowRedirects(false);
+        conn.setHostnameVerifier(allHostsValid);
+        Map<String,Object> params = new LinkedHashMap<>();
+        params.put("login", mLogin);
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String,Object> param : params.entrySet()) {
+            if (postData.length() != 0) postData.append('&');
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+        }
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+        int postLength = postDataBytes.length;
+
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty( "Content-Length", Integer.toString( postLength ));
+        try(OutputStream os = conn.getOutputStream()) {
+            os.write(postDataBytes);
+            os.flush();
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String answer = br.readLine();
+        Map<String, List<String>> headerFields = conn.getHeaderFields();
+        List<String> cookie = headerFields.get("Set-Cookie");
+        String cookieParams = cookie.get(0).split("\"")[1];
+        Logger.getLogger("test").log(Level.SEVERE, cookieParams.toString());
+        return cookieParams;
+    }
+
     private void setInstanceServerParameters(String hostname, String login, String password, int port) {
         mHostname = hostname;
         mPassword = password;
@@ -175,26 +251,40 @@ public class WSMasterInterface {
             }
             if (mHostname == null) return;
             if (mHostname.isEmpty()) return;
-
-            String urlString = "http://"+mHostname+":"+String.valueOf(mPort)+"/master/socketapi/ws";
+            String protocol = "http";
+            if(!mLogin.isEmpty()) {
+                mToken = getToken();
+                protocol = "https";
+            }
+            String urlString = protocol+"://"+mHostname+":"+String.valueOf(mPort)+"/master/socketapi/ws";
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
+            if(connection instanceof HttpsURLConnection) {
+                ((HttpsURLConnection) connection).setHostnameVerifier(allHostsValid);
+            }
             connection.connect();
             int code = connection.getResponseCode();
             if (code == 404) { //no master plugin detected
-                urlString = "http://"+mHostname+":"+String.valueOf(mPort)+"/mopidy_mopidy/socketapi/ws";
+                urlString = protocol+"://"+mHostname+":"+String.valueOf(mPort)+"/mopidy_mopidy/socketapi/ws";
                 url = new URL(urlString);
                 connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
+                if(connection instanceof HttpsURLConnection) {
+                    ((HttpsURLConnection) connection).setHostnameVerifier(allHostsValid);
+                }
                 connection.connect();
                 code = connection.getResponseCode();
                 if ( code == 404) { //no mopidy-mopidy plugin detected
                     return;
                 }
             }
-            urlString = urlString.replace("http://","ws://");
+            urlString = urlString.replace("http","ws");
             mAddListenerLatch = true;
+            factory.setVerifyHostname(false);
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            factory.setSSLContext(sc);
             this.mConnection = factory.createSocket(urlString);
 
             for (WSConnectionStateChangeListener listener: listeners)
@@ -216,6 +306,10 @@ public class WSMasterInterface {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
             e.printStackTrace();
         }
     }

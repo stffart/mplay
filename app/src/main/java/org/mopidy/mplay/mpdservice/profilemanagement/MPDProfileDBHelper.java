@@ -39,7 +39,7 @@ public class MPDProfileDBHelper extends SQLiteOpenHelper {
     /**
      * Database version, used for migrating to new versions.
      */
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
 
     /**
      * Constructor to create the database.
@@ -99,6 +99,14 @@ public class MPDProfileDBHelper extends SQLiteOpenHelper {
                 sqlString = "UPDATE " + MPDServerProfileTable.SQL_TABLE_NAME + " SET " + MPDServerProfileTable.COLUMN_PROFILE_MPD_COVER_ENABLED + " = 1;";
                 database.execSQL(sqlString);
             }
+            case 4: {
+                String sqlString = "ALTER TABLE " + MPDServerProfileTable.SQL_TABLE_NAME + " ADD COLUMN " + MPDServerProfileTable.COLUMN_SERVER_LOGIN + " text;";
+                database.execSQL(sqlString);
+
+                sqlString = "UPDATE " + MPDServerProfileTable.SQL_TABLE_NAME + " SET " + MPDServerProfileTable.COLUMN_SERVER_LOGIN + " = '';";
+                database.execSQL(sqlString);
+            }
+
             default:
                 break;
         }

@@ -59,7 +59,6 @@ public class MPDServerProfileTable {
             COLUMN_PROFILE_HTTP_COVER_REGEX, COLUMN_PROFILE_HTTP_COVER_ENABLED, COLUMN_PROFILE_MPD_COVER_ENABLED
     };
 
-    public static final String DATABASE_DROP = "drop table " + SQL_TABLE_NAME +";";
 
     /**
      * String to initially create the table
@@ -80,7 +79,6 @@ public class MPDServerProfileTable {
         /*
          * Create table in the given database here.
          */
-        database.execSQL(DATABASE_DROP);
         database.execSQL(DATABASE_CREATE);
     }
 }

@@ -67,7 +67,7 @@ public class MPDProfileManager extends Observable {
         if (null != handler) {
             synchronized (mProfileListeners) {
                 mProfileListeners.add(handler);
-                //handler.profileChanged(getAutoconnectProfile());
+                handler.profileChanged(getAutoconnectProfile());
             }
         }
     }

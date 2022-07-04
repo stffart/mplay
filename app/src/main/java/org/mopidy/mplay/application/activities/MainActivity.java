@@ -202,8 +202,7 @@ public class MainActivity extends GenericActivity
 
 
         registerForContextMenu(findViewById(R.id.main_listview));
-        return;
-        /*
+
         if (MPDProfileManager.getInstance(this).getProfiles().size() == 0) {
             navId = R.id.nav_profiles;
 
@@ -253,7 +252,7 @@ public class MainActivity extends GenericActivity
             transaction.replace(R.id.fragment_container, fragment, fragmentTag);
             transaction.commit();
         }
-*/
+
     }
 
     @Override
