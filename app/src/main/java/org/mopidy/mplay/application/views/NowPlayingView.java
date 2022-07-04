@@ -89,6 +89,9 @@ import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDAlbum;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDArtist;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDCurrentStatus;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDTrack;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileChangeHandler;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
 import org.mopidy.mplay.mpdservice.websocket.WSInterface;
 
 import java.lang.ref.WeakReference;
@@ -103,6 +106,8 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
     private final ViewDragHelper mDragHelper;
 
     private final ServerStatusListener mStateListener;
+
+    private final ProfileListener mProfileListener;
 
     private final ServerConnectionListener mConnectionStateListener;
 
@@ -242,6 +247,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
     private TextView mBitrate;
     private TextView mAudioProperties;
     private TextView mTrackURI;
+    private TextView mCurrentProfile;
 
 
     private MPDCurrentStatus mLastStatus;
@@ -261,6 +267,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
         super(context, attrs, defStyle);
         mDragHelper = ViewDragHelper.create(this, 1f, new BottomDragCallbackHelper());
         mStateListener = new ServerStatusListener(this);
+        mProfileListener = new ProfileListener(this);
         mConnectionStateListener = new ServerConnectionListener(this, getContext().getMainLooper());
         mLastStatus = new MPDCurrentStatus();
         mLastTrack = new MPDTrack("");
@@ -860,6 +867,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
 
         // textviews
         mTrackName = findViewById(R.id.now_playing_trackName);
+        mCurrentProfile = findViewById(R.id.current_profile_name);
         // For marquee scrolling the TextView need selected == true
         mTrackName.setSelected(true);
         mTrackAdditionalInfo = findViewById(R.id.now_playing_track_additional_info);
@@ -1122,6 +1130,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
     public void onPause() {
         // Unregister listener
         MPDStateMonitoringHandler.getHandler().unregisterStatusListener(mStateListener);
+        MPDProfileManager.getInstance(this.getContext()).unregisterProfileListener(mProfileListener);
         WSInterface.getGenericInstance().removeMPDConnectionStateChangeListener(mConnectionStateListener);
         mPlaylistView.onPause();
 
@@ -1170,6 +1179,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
 
         // Register with MPDStateMonitoring system
         MPDStateMonitoringHandler.getHandler().registerStatusListener(mStateListener);
+        MPDProfileManager.getInstance(this.getContext()).registerProfileListener(mProfileListener);
         WSInterface.getGenericInstance().addMPDConnectionStateChangeListener(mConnectionStateListener);
 
         mPlaylistView.onResume();
@@ -1195,6 +1205,11 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
             mVolumeSeekbar.setProgress(volume);
         }
     }
+
+    private void updateProfile(String profileName) {
+        mCurrentProfile.setText(profileName);
+    }
+
 
     private void updateMPDStatus(MPDCurrentStatus status) {
         MPDCurrentStatus.MPD_PLAYBACK_STATE state = status.getPlaybackState();
@@ -1354,6 +1369,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
 
     private void updateMPDCurrentTrack(MPDTrack track) {
         // Check if track title is set, otherwise use track name, otherwise path
+
         String title = track.getVisibleTitle();
         mTrackName.setText(title);
 
@@ -1553,6 +1569,22 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
 
         // Called when the user starts the drag
         void onStartDrag();
+    }
+
+    private static class ProfileListener extends MPDProfileChangeHandler {
+
+        private final WeakReference<NowPlayingView> mNowPlayingView;
+
+        ProfileListener(final NowPlayingView nowPlayingView) {
+            mNowPlayingView = new WeakReference<>(nowPlayingView);
+        }
+
+        protected void onProfileChanged(MPDServerProfile profile) {
+            final NowPlayingView nowPlayingView = mNowPlayingView.get();
+            if (nowPlayingView != null) {
+                nowPlayingView.updateProfile(profile.getProfileName());
+            }
+        }
     }
 
     private static class ServerStatusListener extends MPDStatusChangeHandler {

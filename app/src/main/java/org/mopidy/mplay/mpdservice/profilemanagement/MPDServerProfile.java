@@ -48,6 +48,9 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
     @NonNull
     private String mHostname = "";
     @NonNull
+    private String mLogin = "";
+
+    @NonNull
     private String mPassword = "";
     private int mPort;
 
@@ -184,11 +187,28 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
     }
 
     /**
+     *
+     * @return Servers login.
+     */
+    @NonNull
+    public String getLogin() {
+        return mLogin;
+    }
+
+    /**
      * Sets the hostname of this profile
      * @param hostname Hostname to use
      */
     public void setHostname(@NonNull String hostname) {
         this.mHostname = hostname;
+    }
+
+    /**
+     * Sets the login of this profile
+     * @param login Hostname to use
+     */
+    public void setLogin(@NonNull String login) {
+        this.mLogin = login;
     }
 
     /**

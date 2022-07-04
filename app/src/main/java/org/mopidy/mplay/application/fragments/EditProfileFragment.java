@@ -58,6 +58,8 @@ public class EditProfileFragment extends Fragment {
     private String mProfilename;
     private String mHostname;
     private String mPassword;
+    private String mLogin;
+
     private int mPort;
 
     private String mStreamingURL;
@@ -70,6 +72,7 @@ public class EditProfileFragment extends Fragment {
 
     private TextInputEditText mProfilenameView;
     private TextInputEditText mHostnameView;
+    private TextInputEditText mLoginView;
     private TextInputEditText mPasswordView;
     private TextInputEditText mPortView;
 
@@ -107,6 +110,7 @@ public class EditProfileFragment extends Fragment {
 
         mProfilenameView = view.findViewById(R.id.fragment_profile_profilename);
         mHostnameView = view.findViewById(R.id.fragment_profile_hostname);
+        mLoginView = view.findViewById(R.id.fragment_profile_login);
         mPasswordView = view.findViewById(R.id.fragment_profile_password);
         mPortView = view.findViewById(R.id.fragment_profile_port);
 
@@ -131,6 +135,7 @@ public class EditProfileFragment extends Fragment {
                 mProfilename = mOldProfile.getProfileName();
                 mHostname = mOldProfile.getHostname();
                 mPassword = mOldProfile.getPassword();
+                mLogin = mOldProfile.getLogin();
                 mPort = mOldProfile.getPort();
 
                 mStreamingURL = mOldProfile.getStreamingURL();
@@ -142,10 +147,12 @@ public class EditProfileFragment extends Fragment {
                 mMPDCoverEnabled = mOldProfile.getMPDCoverEnabled();
 
                 mProfilenameView.setText(mProfilename);
+                mLoginView.setText(mLogin);
             } else {
                 mHostname = "";
                 mProfilename = "";
                 mPassword = "";
+                mLogin = "";
                 mPort = 6680;
 
                 mStreamingEnabled = false;
@@ -157,11 +164,13 @@ public class EditProfileFragment extends Fragment {
                 mMPDCoverEnabled = true;
 
                 mProfilenameView.setText(getString(R.string.fragment_profile_default_name));
+                mLoginView.setText("");
             }
         }
 
         mHostnameView.setText(mHostname);
         mPasswordView.setText(mPassword);
+        mLoginView.setText(mLogin);
         mPortView.setText(String.valueOf(mPort));
 
         // Show/Hide streaming url view depending on state
@@ -250,6 +259,10 @@ public class EditProfileFragment extends Fragment {
             profileChanged = true;
             mHostname = mHostnameView.getText().toString();
         }
+        if (!mLoginView.getText().toString().equals(mLogin)) {
+            profileChanged = true;
+            mLogin = mLoginView.getText().toString();
+        }
         if (!mPasswordView.getText().toString().equals(mPassword)) {
             profileChanged = true;
             mPassword = mPasswordView.getText().toString();
@@ -287,6 +300,7 @@ public class EditProfileFragment extends Fragment {
             }
             mOldProfile.setProfileName(mProfilename);
             mOldProfile.setHostname(mHostname);
+            mOldProfile.setLogin(mLogin);
             mOldProfile.setPassword(mPassword);
             mOldProfile.setPort(mPort);
             mOldProfile.setStreamingURL(mStreamingURL);

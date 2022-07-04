@@ -168,7 +168,7 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
         }
     }
 
-    private void resynchronizeState() {
+    private void resynchronizeState() throws MPDException.MPDConnectionException {
 
         // Stop the interpolation
         stopInterpolation();
@@ -288,7 +288,11 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
         }
         distributeNewStatus(mLastStatus);
         distributeNewTrack(mLastFile);
-        resynchronizeState();
+        try {
+            resynchronizeState();
+        } catch (MPDException.MPDConnectionException e) {
+            e.printStackTrace();
+        }
     }
 
     private void onConnected() {
@@ -315,7 +319,11 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
 
     public void onNoIdle() {
         // Server idle is over (reason unclear), resync the state
-        resynchronizeState();
+        try {
+            resynchronizeState();
+        } catch (MPDException.MPDConnectionException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setRefreshInterval(int interval) {
@@ -327,7 +335,11 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
 
         @Override
         public void run() {
-            resynchronizeState();
+            try {
+                resynchronizeState();
+            } catch (MPDException.MPDConnectionException e) {
+                e.printStackTrace();
+            }
         }
     }
 

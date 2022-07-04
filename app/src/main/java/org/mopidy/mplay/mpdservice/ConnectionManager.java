@@ -70,6 +70,7 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
 
     private String mHostname;
     private String mPassword;
+    private String mLogin;
     private int mPort;
 
     private boolean mAutoConnect = true;
@@ -116,13 +117,14 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
         mHostname = profile.getHostname();
         mPassword = profile.getPassword();
         mPort = profile.getPort();
+        mLogin = profile.getLogin();
 
         MPDProfileManager.getInstance(context).deleteProfile(profile);
         profile.setAutoconnect(true);
         MPDProfileManager.getInstance(context).addProfile(profile);
 
         mConnectionManager.mServerProfile = profile;
-        MPDCommandHandler.getHandler().setServerParameters(mHostname, mPassword, mPort);
+        MPDCommandHandler.getHandler().setServerParameters(mHostname, mLogin, mPassword, mPort);
     }
 
     public void reconnectLastServer(Context context) {
@@ -148,9 +150,9 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
     }
 
     public void autoConnect(Context context) {
-        mConnectionManager.mServerProfile = MPDProfileManager.getInstance(context).getAutoconnectProfile();
+        //mConnectionManager.mServerProfile = MPDProfileManager.getInstance(context).getAutoconnectProfile();
 
-        setParameters(mConnectionManager.mServerProfile, context);
+        //setParameters(mConnectionManager.mServerProfile, context);
     }
 
     private synchronized void increaseMPDUse(Context context) {

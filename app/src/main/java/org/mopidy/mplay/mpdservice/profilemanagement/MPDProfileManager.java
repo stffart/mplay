@@ -27,6 +27,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.collection.ArraySet;
+
+import org.mopidy.mplay.mpdservice.handlers.MPDStatusChangeHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -57,6 +61,33 @@ public class MPDProfileManager extends Observable {
         return mInstance;
     }
 
+    private final ArrayList<MPDProfileChangeHandler> mProfileListeners = new ArrayList<>();
+
+    public void registerProfileListener(MPDProfileChangeHandler handler) {
+        if (null != handler) {
+            synchronized (mProfileListeners) {
+                mProfileListeners.add(handler);
+                //handler.profileChanged(getAutoconnectProfile());
+            }
+        }
+    }
+
+    public void unregisterProfileListener(MPDProfileChangeHandler handler) {
+        if (null != handler) {
+            synchronized (mProfileListeners) {
+                mProfileListeners.remove(handler);
+            }
+        }
+    }
+
+    private void distributeProfile() {
+        synchronized (mProfileListeners) {
+            for (MPDProfileChangeHandler handler : mProfileListeners) {
+                handler.profileChanged(getAutoconnectProfile());
+            }
+        }
+    }
+
     /**
      * Creates a list of all available server profiles.
      *
@@ -79,6 +110,7 @@ public class MPDProfileManager extends Observable {
 
                 /* Server parameters */
                 String serverHostname = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_HOSTNAME));
+                String serverLogin = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_LOGIN));
                 String serverPassword = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PASSWORD));
                 int serverPort = cursor.getInt(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PORT));
                 long creationDate = cursor.getLong(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_PROFILE_DATE_CREATED));
@@ -97,6 +129,7 @@ public class MPDProfileManager extends Observable {
                 /* Create temporary object to append to list. */
                 MPDServerProfile profile = new MPDServerProfile(profileName, autoConnect, creationDate);
                 profile.setHostname(serverHostname);
+                profile.setLogin(serverLogin);
                 profile.setPassword(serverPassword);
                 profile.setPort(serverPort);
 
@@ -148,6 +181,8 @@ public class MPDProfileManager extends Observable {
 
         /* Server parameter */
         values.put(MPDServerProfileTable.COLUMN_SERVER_HOSTNAME, profile.getHostname());
+        values.put(MPDServerProfileTable.COLUMN_SERVER_LOGIN, profile.getLogin());
+
         values.put(MPDServerProfileTable.COLUMN_SERVER_PASSWORD, profile.getPassword());
         values.put(MPDServerProfileTable.COLUMN_SERVER_PORT, profile.getPort());
         values.put(MPDServerProfileTable.COLUMN_PROFILE_DATE_CREATED, profile.getCreationDate());
@@ -210,6 +245,8 @@ public class MPDProfileManager extends Observable {
 
             /* Server parameters */
             String serverHostname = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_HOSTNAME));
+            String serverLogin = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_LOGIN));
+
             String serverPassword = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PASSWORD));
             int serverPort = cursor.getInt(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PORT));
             long creationDate = cursor.getLong(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_PROFILE_DATE_CREATED));
@@ -230,7 +267,7 @@ public class MPDProfileManager extends Observable {
             profile.setHostname(serverHostname);
             profile.setPassword(serverPassword);
             profile.setPort(serverPort);
-
+            profile.setLogin(serverLogin);
             profile.setStreamingURL(streamingURL);
             profile.setStreamingEnabled(streamingEnabled);
 
@@ -277,6 +314,7 @@ public class MPDProfileManager extends Observable {
         db.update(MPDServerProfileTable.SQL_TABLE_NAME, autoConValuesOn, MPDServerProfileTable.COLUMN_PROFILE_NAME +"=?", new String[]{profile.getProfileName()});
         db.close();
 
+        distributeProfile();
         notifyObservers();
 
 

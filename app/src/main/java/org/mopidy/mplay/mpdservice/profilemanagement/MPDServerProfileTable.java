@@ -37,6 +37,7 @@ public class MPDServerProfileTable {
     public static final String COLUMN_PROFILE_NAME = "profile_name";
     public static final String COLUMN_SERVER_HOSTNAME = "server_hostname";
     public static final String COLUMN_SERVER_PASSWORD = "server_password";
+    public static final String COLUMN_SERVER_LOGIN = "server_login";
     public static final String COLUMN_SERVER_PORT = "server_port";
     public static final String COLUMN_PROFILE_AUTO_CONNECT = "autoconnect";
     public static final String COLUMN_PROFILE_DATE_CREATED = "date";
@@ -53,18 +54,19 @@ public class MPDServerProfileTable {
      * Projection string array used for queries on this table
      */
     public static final String[] PROJECTION_SERVER_PROFILES = {COLUMN_PROFILE_NAME, COLUMN_PROFILE_AUTO_CONNECT,
-        COLUMN_SERVER_HOSTNAME, COLUMN_SERVER_PASSWORD, COLUMN_SERVER_PORT, COLUMN_PROFILE_DATE_CREATED,
+        COLUMN_SERVER_HOSTNAME, COLUMN_SERVER_LOGIN, COLUMN_SERVER_PASSWORD, COLUMN_SERVER_PORT, COLUMN_PROFILE_DATE_CREATED,
             COLUMN_PROFILE_STREAMING_PORT, COLUMN_PROFILE_STREAMING_ENABLED,
             COLUMN_PROFILE_HTTP_COVER_REGEX, COLUMN_PROFILE_HTTP_COVER_ENABLED, COLUMN_PROFILE_MPD_COVER_ENABLED
     };
 
+    public static final String DATABASE_DROP = "drop table " + SQL_TABLE_NAME +";";
 
     /**
      * String to initially create the table
      */
     public static final String DATABASE_CREATE = "create table if not exists " +  SQL_TABLE_NAME + " (" +
             COLUMN_PROFILE_NAME + " text," + COLUMN_PROFILE_AUTO_CONNECT + " integer," +
-            COLUMN_SERVER_HOSTNAME + " text," + COLUMN_SERVER_PASSWORD + " text," +
+            COLUMN_SERVER_HOSTNAME + " text," + COLUMN_SERVER_LOGIN + " text," + COLUMN_SERVER_PASSWORD + " text," +
             COLUMN_SERVER_PORT  + " integer,"  + COLUMN_PROFILE_DATE_CREATED  + " integer PRIMARY KEY, " +
             COLUMN_PROFILE_STREAMING_PORT  + " integer,"  + COLUMN_PROFILE_STREAMING_ENABLED  + " integer," +
             COLUMN_PROFILE_HTTP_COVER_REGEX  + " text,"  + COLUMN_PROFILE_HTTP_COVER_ENABLED  + " integer," +
@@ -78,6 +80,7 @@ public class MPDServerProfileTable {
         /*
          * Create table in the given database here.
          */
+        database.execSQL(DATABASE_DROP);
         database.execSQL(DATABASE_CREATE);
     }
 }

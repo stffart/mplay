@@ -56,6 +56,7 @@ public class WSMasterInterface {
     private static String mHostname;
     private static int mPort;
     private static String mPassword;
+    private static String mLogin;
 
     private List<WSConnectionStateChangeListener> listeners = new ArrayList<WSConnectionStateChangeListener>();
     private boolean mAddListenerLatch = false;
@@ -63,19 +64,20 @@ public class WSMasterInterface {
     public static synchronized WSMasterInterface getGenericInstance() {
         if (mGenericInterface == null) {
             mGenericInterface = new WSMasterInterface();
-            mGenericInterface.setInstanceServerParameters(mHostname, mPassword, mPort);
+            mGenericInterface.setInstanceServerParameters(mHostname, mLogin, mPassword, mPort);
         }
 
         return mGenericInterface;
     }
 
-    public void setServerParameters(String hostname, String password, int port) {
+    public void setServerParameters(String hostname, String login, String password, int port) {
         mHostname = hostname;
         mPassword = password;
         mPort = port;
+        mLogin = login;
 
         if (mGenericInterface != null) {
-            mGenericInterface.setInstanceServerParameters(hostname, password, port);
+            mGenericInterface.setInstanceServerParameters(hostname, login, password, port);
         }
     }
 
@@ -163,7 +165,7 @@ public class WSMasterInterface {
         }
     }
 
-    private void setInstanceServerParameters(String hostname, String password, int port) {
+    private void setInstanceServerParameters(String hostname, String login, String password, int port) {
         mHostname = hostname;
         mPassword = password;
         mPort = port;

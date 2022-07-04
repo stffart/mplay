@@ -406,6 +406,8 @@ public class MPDQueryHandler extends MPDGenericHandler {
                             @Override
                             public void onFailure(Throwable t) {
                                 Log.e(TAG, "Cannot get playlists ");
+                                if (t instanceof MPDException)
+                                    handleMPDError((MPDException) t);
                                 t.printStackTrace();
                             }
                         }, service);
@@ -517,7 +519,11 @@ public class MPDQueryHandler extends MPDGenericHandler {
                     @Override
                     public void onSuccess(MPDCurrentStatus result) {
                         Log.e(TAG,"GET status");
-                        WSInterface.getGenericInstance().addSongatIndex(url, result.getCurrentSongIndex() + 1);
+                        try {
+                            WSInterface.getGenericInstance().addSongatIndex(url, result.getCurrentSongIndex() + 1);
+                        } catch (MPDException.MPDConnectionException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

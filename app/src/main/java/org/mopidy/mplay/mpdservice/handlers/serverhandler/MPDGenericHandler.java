@@ -28,6 +28,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.mopidy.mplay.BuildConfig;
 import org.mopidy.mplay.mpdservice.handlers.MPDConnectionErrorHandler;
 import org.mopidy.mplay.mpdservice.mpdprotocol.MPDException;
@@ -114,18 +116,22 @@ public abstract class MPDGenericHandler extends Handler {
             /* Parse message objects extras */
             // Get the message extras
             String hostname = mpdAction.getStringExtra(MPDHandlerAction.NET_HANDLER_EXTRA_STRING.EXTRA_SERVER_HOSTNAME);
+            String login = mpdAction.getStringExtra(MPDHandlerAction.NET_HANDLER_EXTRA_STRING.EXTRA_SERVER_LOGIN);
             String password = mpdAction.getStringExtra(MPDHandlerAction.NET_HANDLER_EXTRA_STRING.EXTRA_SERVER_PASSWORD);
             Integer port = mpdAction.getIntExtra(MPDHandlerAction.NET_HANDLER_EXTRA_INT.EXTRA_SERVER_PORT);
             if ((null == hostname) || (null == port)) {
                 return;
             }
-            WSInterface.getGenericInstance().setServerParameters(hostname, password, port);
-            WSMasterInterface.getGenericInstance().setServerParameters(hostname, password, port);
+            WSInterface.getGenericInstance().setServerParameters(hostname, login, password, port);
+            WSMasterInterface.getGenericInstance().setServerParameters(hostname, login, password, port);
         } else if (action == MPDHandlerAction.NET_HANDLER_ACTION.ACTION_CONNECT_MPD_SERVER) {
             // Connect to the mpd server. Server parameters have to be set before.
             try {
                 Log.e(TAG,"WS INTERFACE");
                 WSInterface.getGenericInstance().connect();
+                if (! WSInterface.getGenericInstance().isConnected()) {
+                    throw new MPDException.MPDConnectionException("Cannot connect to mopidy");
+                }
                 Log.e(TAG,"WS MASTER INTERFACE");
                 WSMasterInterface.getGenericInstance().connect();
             } catch (MPDException e) {
@@ -160,7 +166,7 @@ public abstract class MPDGenericHandler extends Handler {
      * @param password Password that is used to authenticate with the server. Can be left empty.
      * @param port     Port to use for the connection. (Default: 6600)
      */
-    public void setServerParameters(String hostname, String password, int port) {
+    public void setServerParameters(String hostname, String login, String password, int port) {
         MPDHandlerAction action = new MPDHandlerAction(MPDHandlerAction.NET_HANDLER_ACTION.ACTION_SET_SERVER_PARAMETERS);
         Message msg = Message.obtain();
         if (msg == null) {
@@ -168,6 +174,7 @@ public abstract class MPDGenericHandler extends Handler {
         }
         action.setStringExtra(MPDHandlerAction.NET_HANDLER_EXTRA_STRING.EXTRA_SERVER_HOSTNAME, hostname);
         action.setStringExtra(MPDHandlerAction.NET_HANDLER_EXTRA_STRING.EXTRA_SERVER_PASSWORD, password);
+        action.setStringExtra(MPDHandlerAction.NET_HANDLER_EXTRA_STRING.EXTRA_SERVER_LOGIN, login);
         action.setIntExtras(MPDHandlerAction.NET_HANDLER_EXTRA_INT.EXTRA_SERVER_PORT, port);
         msg.obj = action;
         sendMessage(msg);

@@ -120,6 +120,7 @@ public class MPDHandlerAction {
      */
     public enum NET_HANDLER_EXTRA_STRING {
         EXTRA_SERVER_HOSTNAME,
+        EXTRA_SERVER_LOGIN,
         EXTRA_SERVER_PASSWORD,
         EXTRA_ARTIST_NAME,
         EXTRA_ARTIST_URL,

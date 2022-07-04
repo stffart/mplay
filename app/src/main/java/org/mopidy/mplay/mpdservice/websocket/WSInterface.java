@@ -85,12 +85,14 @@ import org.mopidy.mplay.mpdservice.websocket.types.JSONTrack;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -106,6 +108,7 @@ public class WSInterface  {
     private static String mHostname;
     private static int mPort;
     private static String mPassword;
+    private static String mLogin;
 
     private MPDCache mCache;
 
@@ -137,20 +140,22 @@ public class WSInterface  {
     public static synchronized WSInterface getGenericInstance() {
         if (mGenericInterface == null) {
             mGenericInterface = new WSInterface(false, "WSGeneric");
-            mGenericInterface.setInstanceServerParameters(mHostname, mPassword, mPort);
+            mGenericInterface.setInstanceServerParameters(mHostname, mLogin, mPassword, mPort);
         }
 
         return mGenericInterface;
     }
 
 
-    public void setServerParameters(String hostname, String password, int port) {
+    public void setServerParameters(String hostname, String login, String password, int port) {
         mHostname = hostname;
         mPassword = password;
         mPort = port;
+        mLogin = login;
+
 
         if (mGenericInterface != null) {
-            mGenericInterface.setInstanceServerParameters(hostname, password, port);
+            mGenericInterface.setInstanceServerParameters(hostname, login, password, port);
         }
 /*
         if (mArtworkInterface != null) {
@@ -214,10 +219,11 @@ public class WSInterface  {
         }
     }
 
-    private void setInstanceServerParameters(String hostname, String password, int port) {
+    private void setInstanceServerParameters(String hostname, String login, String password, int port) {
         mCache = new MPDCache(0);
         mHostname = hostname;
         mPassword = password;
+        mLogin = login;
         mPort = port;
         try {
             while(mAddListenerLatch) {
@@ -227,6 +233,17 @@ public class WSInterface  {
             if (mHostname.isEmpty()) return;
             mAddListenerLatch = true;
 
+            if(!mLogin.isEmpty()) {
+
+                URL loginURL = new URL("https://+"+mHostname+":"+String.valueOf(mPort)+"/login");
+                HttpURLConnection conn = (HttpURLConnection) loginURL.openConnection();
+                conn.setRequestMethod("POST");
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] b = ("login="+mLogin).getBytes();
+                    os.write(b);
+                }
+                Map<String, List<String>> headerFields = conn.getHeaderFields();
+            }
             this.mConnection = factory.createSocket("ws://"+mHostname+":"+String.valueOf(mPort)+"/mopidy/ws");
 
             for (WSConnectionStateChangeListener listener: listeners)
@@ -287,12 +304,12 @@ public class WSInterface  {
     }
 
     public void connect() throws  MPDException {
-        Log.e(TAG, "Start connection");
         if (mConnection == null) return;
         while(mConnection.getState() == WebSocketState.CLOSING ||
                 mConnection.getState() == WebSocketState.CONNECTING )
         {
             try {
+                Log.e(TAG, "Start connection");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -316,10 +333,11 @@ public class WSInterface  {
         } catch (WebSocketException e) {
             Log.e(TAG,String.valueOf(mConnection.getState()));
             e.printStackTrace();
+            return;
         }
         Log.e(mLogTag,"WS CONNECTED");
         mIDLEChangeHandler.noIdle();
-    }
+   }
 
     public void disconnect() {
         mConnection.disconnect();
@@ -331,13 +349,13 @@ public class WSInterface  {
         return new ArrayList<>();
     }
 
-    public void nextSong() {
+    public void nextSong() throws MPDException.MPDConnectionException {
         Log.e(TAG, "next");
         JSONRequest request_next = new JSONRequest(getNextID(), "core.playback.next");
         sendRequest(request_next);
     }
 
-    public void previousSong() {
+    public void previousSong() throws MPDException.MPDConnectionException {
         JSONRequest request_time_position = new JSONRequest(getNextID(), "core.playback.get_time_position");
         sendRequest(request_time_position);
         Gson gson = new Gson();
@@ -355,18 +373,20 @@ public class WSInterface  {
         sendRequest(request_previous);
     }
 
-    public void stopPlayback() {
+    public void stopPlayback() throws MPDException.MPDConnectionException {
         Log.e(TAG, "stop");
         JSONRequest request_stop = new JSONRequest(getNextID(), "core.playback.stop");
         sendRequest(request_stop);
 
     }
 
-    public void pause(boolean p) {
+    public void pause(boolean p) throws MPDException.MPDConnectionException {
         Log.e(TAG, "pause");
         if(p) {
             JSONRequest request_pause = new JSONRequest(getNextID(), "core.playback.pause");
             sendRequest(request_pause);
+            String message = waitResponse(request_pause);
+            Log.e(TAG,message);
         } else
         {
             JSONRequest request_play = new JSONRequest(getNextID(), "core.playback.play");
@@ -374,7 +394,7 @@ public class WSInterface  {
         }
     }
 
-    public int getCurrentVolume() {
+    public int getCurrentVolume() throws MPDException.MPDConnectionException {
         if (mPlayHere) {
             return Math.round(mPlayer.getVolume()*100);
         } else {
@@ -391,12 +411,15 @@ public class WSInterface  {
         }
     }
 
-    public void sendRequest(JSONRequest request) {
+    public void sendRequest(JSONRequest request) throws MPDException.MPDConnectionException {
         if (mConnection == null) return;
         try {
             connect();
+            if (!isConnected())
+                throw new MPDException.MPDConnectionException("Cannot connect to mopidy");
         } catch (MPDException e) {
             e.printStackTrace();
+            throw new MPDException.MPDConnectionException("Cannot connect to mopidy");
         }
         mConnection.sendText(request.toJSON());
     }
@@ -515,7 +538,7 @@ public class WSInterface  {
         return result;
     }
 
-    public void playSongIndex(int currentSongIndex) {
+    public void playSongIndex(int currentSongIndex) throws MPDException.MPDConnectionException {
         JSONRequest request_current_track = new JSONRequest(getNextID(), "core.tracklist.slice", new JSONParamsStartEnd(currentSongIndex,currentSongIndex+1));
         sendRequest(request_current_track);
         Gson gson = new Gson();
@@ -528,32 +551,32 @@ public class WSInterface  {
         }
     }
 
-    public void setRandom(boolean random) {
+    public void setRandom(boolean random) throws MPDException.MPDConnectionException {
         Log.e(TAG, "set random");
         JSONRequest request_random = new JSONRequest(getNextID(), "core.tracklist.set_random",new JSONParamsBoolean(random));
         sendRequest(request_random);
     }
 
-    public void setRepeat(boolean repeat) {
+    public void setRepeat(boolean repeat) throws MPDException.MPDConnectionException {
         Log.e(TAG, "set repeat");
         JSONRequest request_repeat = new JSONRequest(getNextID(), "core.tracklist.set_repeat",new JSONParamsBoolean(repeat));
         sendRequest(request_repeat);
 
     }
 
-    public void setSingle(boolean single) {
+    public void setSingle(boolean single) throws MPDException.MPDConnectionException {
         Log.e(TAG, "set single");
         JSONRequest request_repeat = new JSONRequest(getNextID(), "core.tracklist.set_single",new JSONParamsBoolean(single));
         sendRequest(request_repeat);
     }
 
-    public void setConsume(boolean consume) {
+    public void setConsume(boolean consume) throws MPDException.MPDConnectionException {
         Log.e(TAG, "set consume");
         JSONRequest request_repeat = new JSONRequest(getNextID(), "core.tracklist.set_consume",new JSONParamsBoolean(consume));
         sendRequest(request_repeat);
     }
 
-    public void seekSeconds(int seekTo) {
+    public void seekSeconds(int seekTo) throws MPDException.MPDConnectionException {
         Log.e(TAG, "SEEK");
         JSONRequest request_seek = new JSONRequest(getNextID(), "core.playback.seek",new JSONParamsTimePosition(seekTo));
         sendRequest(request_seek);
@@ -636,14 +659,14 @@ public class WSInterface  {
                     }
                 }
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | MPDException.MPDConnectionException e) {
             e.printStackTrace();
         }
         mWaiters--;
         return responses.get(request.id);
     }
 
-    public List<MPDAlbum> getAlbums() {
+    public List<MPDAlbum> getAlbums() throws MPDException.MPDConnectionException {
         int id = getNextID();
         JSONRequest request = new JSONRequest(id, "core.library.search");
         JSONSearchParams params = new JSONSearchParams(new JSONSearchAlbumQuery("_____"));
@@ -666,7 +689,7 @@ public class WSInterface  {
         return new ArrayList<MPDAlbum>();
     }
 
-    public void clearPlaylist() {
+    public void clearPlaylist() throws MPDException.MPDConnectionException {
         Log.e(TAG, "clearplaylist");
         JSONRequest request_clear = new JSONRequest(getNextID(), "core.tracklist.clear");
         sendRequest(request_clear);
@@ -706,7 +729,7 @@ public class WSInterface  {
         return new ArrayList<MPDAlbum>();
     }
 
-    public List<MPDArtist> getArtists() {
+    public List<MPDArtist> getArtists() throws MPDException.MPDConnectionException {
         int id = getNextID();
         JSONRequest request = new JSONRequest(id, "core.library.search");
         JSONSearchParams params = new JSONSearchParams(new JSONSearchArtistQuery("_____"));
@@ -887,7 +910,7 @@ public class WSInterface  {
         Log.e(TAG, "saveplaylist deprecated");
     }
 
-    public void savePlaylist(JSONSimplePlaylist playlist) {
+    public void savePlaylist(JSONSimplePlaylist playlist) throws MPDException.MPDConnectionException {
         Log.e(TAG, "saveplaylist");
         JSONRequest request_playlist = new JSONRequest(getNextID(), "core.playlists.save", new JSONParamsPlaylist(playlist));
         sendRequest(request_playlist);
@@ -896,7 +919,7 @@ public class WSInterface  {
         JSONPlaylistResponse result = gson.fromJson(message, JSONPlaylistResponse.class);
     }
 
-    public void addSongToPlaylist(String playlistName, String path) {
+    public void addSongToPlaylist(String playlistName, String path) throws MPDException.MPDConnectionException {
         Log.e(TAG, "addsongtoplaylist");
         JSONRequest request_playlist = new JSONRequest(getNextID(), "core.playlists.lookup", new JSONParamsURI(playlistName));
         mConnection.sendText(request_playlist.toJSON());
@@ -916,7 +939,7 @@ public class WSInterface  {
         savePlaylist(new_playlist);
     }
 
-    public void removeSongFromPlaylist(String playlistName, int position) {
+    public void removeSongFromPlaylist(String playlistName, int position) throws MPDException.MPDConnectionException {
         Log.e(TAG, "removesongfromplaylist");
         JSONRequest request_playlist = new JSONRequest(getNextID(), "core.playlists.lookup", new JSONParamsURI(playlistName));
         mConnection.sendText(request_playlist.toJSON());
@@ -935,7 +958,7 @@ public class WSInterface  {
         savePlaylist(new_playlist);
     }
 
-    public void removePlaylist(String playlistName) {
+    public void removePlaylist(String playlistName) throws MPDException.MPDConnectionException {
         Log.e(TAG, "removeplaylist");
         JSONRequest request_delete = new JSONRequest(getNextID(), "core.playlists.delete",new JSONParamsURI(playlistName));
         sendRequest(request_delete);
@@ -943,7 +966,7 @@ public class WSInterface  {
         Log.e(TAG,message);
     }
 
-    public void loadPlaylist(String playlistName) {
+    public void loadPlaylist(String playlistName) throws MPDException.MPDConnectionException {
         Log.e(TAG, "loadplaylist");
         List<MPDFileEntry> tracks = getSavedPlaylist(playlistName);
         ArrayList<String> track_uris = new ArrayList<>();
@@ -968,7 +991,7 @@ public class WSInterface  {
         Log.e(TAG, "addartistsort");
     }
 
-    public void addSong(String url) {
+    public void addSong(String url) throws MPDException.MPDConnectionException {
         Log.e(TAG, "addsong");
         JSONRequest request_current_track = new JSONRequest(getNextID(), "core.tracklist.add", new JSONParamsURIList(url));
         sendRequest(request_current_track);
@@ -982,7 +1005,7 @@ public class WSInterface  {
         }
     }
 
-    public void addSongatIndex(String url, int i) {
+    public void addSongatIndex(String url, int i) throws MPDException.MPDConnectionException {
         Log.e(TAG, "addsongatindex");
         JSONRequest request_add_track = new JSONRequest(getNextID(), "core.tracklist.add", new JSONParamsURIListWithPosition(url,i));
         sendRequest(request_add_track);
@@ -997,13 +1020,13 @@ public class WSInterface  {
 
     }
 
-    public void shufflePlaylist() {
+    public void shufflePlaylist() throws MPDException.MPDConnectionException {
         Log.e(TAG, "shuffle");
         JSONRequest request_shuffle = new JSONRequest(getNextID(), "core.tracklist.shuffle");
         sendRequest(request_shuffle);
     }
 
-    public void moveSongFromTo(int index, int currentSongIndex) {
+    public void moveSongFromTo(int index, int currentSongIndex) throws MPDException.MPDConnectionException {
         Log.e(TAG, "moveSong");
         JSONRequest request_move_track = new JSONRequest(getNextID(), "core.tracklist.move", new JSONParamsStartEndPosition(index,index+1,currentSongIndex));
         sendRequest(request_move_track);
@@ -1012,12 +1035,12 @@ public class WSInterface  {
         JSONTLTracksResponse tl_track = gson.fromJson(message, JSONTLTracksResponse.class);
     }
 
-    public void removeIndex(int index) {
+    public void removeIndex(int index) throws MPDException.MPDConnectionException {
         Log.e(TAG, "removeIndex");
         removeRange(index,index+1);
     }
 
-    public void removeRange(int start, int end) {
+    public void removeRange(int start, int end) throws MPDException.MPDConnectionException {
         Log.e(TAG, "removeRange");
         JSONRequest request_current_track = new JSONRequest(getNextID(), "core.tracklist.slice", new JSONParamsStartEnd(start,end));
         sendRequest(request_current_track);
@@ -1049,7 +1072,7 @@ public class WSInterface  {
         Log.e(TAG, "updateDatabase");
     }
 
-    public List<MPDFileEntry> getSearchedFiles(String term, MPDCommands.MPD_SEARCH_TYPE type) {
+    public List<MPDFileEntry> getSearchedFiles(String term, MPDCommands.MPD_SEARCH_TYPE type) throws MPDException.MPDConnectionException {
         Log.e(TAG, "getSearchedFiles");
         int id = getNextID();
         JSONRequest request = new JSONRequest(id, "core.library.search");
@@ -1097,7 +1120,7 @@ public class WSInterface  {
         Log.e(TAG, "addSearchedFiles");
     }
 
-    public void addTrackList(List<MPDFileEntry> searchResults) {
+    public void addTrackList(List<MPDFileEntry> searchResults) throws MPDException.MPDConnectionException {
         Log.e(TAG, "addTrackList");
         ArrayList<String> uris = new ArrayList<>();
         for(MPDFileEntry entry: searchResults) {
