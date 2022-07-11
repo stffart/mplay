@@ -29,6 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.collection.ArraySet;
 
+import org.mopidy.mplay.mpdservice.ConnectionManager;
 import org.mopidy.mplay.mpdservice.handlers.MPDStatusChangeHandler;
 
 import java.util.ArrayList;
@@ -47,6 +48,8 @@ public class MPDProfileManager extends Observable {
     private static MPDProfileManager mInstance;
     private String mMasterHost;
     private int mMasterPort;
+    private String mMasterLogin;
+    private String mMasterPassword;
 
     private MPDProfileManager(Context context) {
         /* Create instance of the helper class to get the writable DB later. */
@@ -286,13 +289,24 @@ public class MPDProfileManager extends Observable {
         return null;
     }
 
-    public void setMasterServer(String host, int port) {
+    public void setMasterServer(String host, int port, String login, String password) {
         mMasterHost = host;
         mMasterPort = port;
+        mMasterLogin = login;
+        mMasterPassword = password;
+        ConnectionManager.getInstance(null).createPlayer();
     }
 
+
     public String getMasterURL() {
-        return "http://"+mMasterHost+":"+String.valueOf(mMasterPort);
+        String protocol = "http";
+        if(!mMasterLogin.isEmpty())
+            protocol = "https";
+        return protocol+"://"+mMasterHost+":"+String.valueOf(mMasterPort);
+    }
+
+    public String getMasterLogin() {
+        return mMasterLogin;
     }
 
     public void setActiveProfile(MPDServerProfile profile) {

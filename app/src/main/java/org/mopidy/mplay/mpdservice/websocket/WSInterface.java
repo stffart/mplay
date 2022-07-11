@@ -1249,6 +1249,10 @@ public class WSInterface  {
             return;
         try {
             MPDTrack currentTrack = getCurrentSong();
+            if (currentTrack == null)
+                return;
+            if (currentTrack.getURI().isEmpty())
+                return;
             mPlayer.playURI(currentTrack.getURI());
             mPlayHere = true;
             JSONRequest request_time_position = new JSONRequest(getNextID(), "core.playback.get_time_position");

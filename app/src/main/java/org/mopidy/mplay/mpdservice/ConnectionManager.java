@@ -89,7 +89,9 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
     private MPDServerProfile mServerProfile = new MPDServerProfile();
 
     private final Context mApplicationContext;
-    LocalPlayer mPlayer;
+    LocalPlayer mPlayer = null;
+    private Context mContext;
+
 
     private ConnectionManager(Context context) {
         super(context.getMainLooper());
@@ -118,6 +120,7 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
         mPassword = profile.getPassword();
         mPort = profile.getPort();
         mLogin = profile.getLogin();
+        mContext = context;
 
         MPDProfileManager.getInstance(context).deleteProfile(profile);
         profile.setAutoconnect(true);
@@ -125,6 +128,10 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
 
         mConnectionManager.mServerProfile = profile;
         MPDCommandHandler.getHandler().setServerParameters(mHostname, mLogin, mPassword, mPort);
+    }
+
+    public void createPlayer() {
+        mPlayer.initPlayer();
     }
 
     public void reconnectLastServer(Context context) {

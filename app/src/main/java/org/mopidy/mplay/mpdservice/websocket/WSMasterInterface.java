@@ -113,15 +113,15 @@ public class WSMasterInterface {
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
-                if(device.me) {
-                    MPDProfileManager.getInstance(null).setMasterServer(uri.getHost(),uri.getPort());
-                }
                 boolean found = false;
                 for(MPDServerProfile profile: profiles) {
                     if (profile.getHostname().equals(uri.getHost()) && profile.getPort() == uri.getPort()) {
                         found = true;
                         if (device.active) {
                             MPDProfileManager.getInstance(null).setActiveProfile(profile);
+                        }
+                        if(device.me) {
+                            MPDProfileManager.getInstance(null).setMasterServer(uri.getHost(),uri.getPort(),profile.getLogin(),profile.getPassword());
                         }
                         break;
                     }
