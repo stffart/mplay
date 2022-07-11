@@ -1207,6 +1207,7 @@ public class NowPlayingView extends RelativeLayout implements PopupMenu.OnMenuIt
     }
 
     private void updateProfile(String profileName) {
+
         mCurrentProfile.setText("@ "+profileName);
     }
 

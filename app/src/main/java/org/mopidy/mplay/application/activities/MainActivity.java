@@ -638,6 +638,8 @@ public class MainActivity extends GenericActivity
         }
     }
 
+
+
     @Override
     public void onDragPositionChanged(float pos) {
         if (mHeaderImageActive) {

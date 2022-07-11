@@ -399,6 +399,9 @@ public class BackgroundService extends Service implements AudioManager.OnAudioFo
         // Notify about new dummy tracks
         notifyNewStatus(mLastStatus);
         notifyNewTrack(mLastTrack);
+
+        MPDServerProfile profile = MPDProfileManager.getInstance(this).getAutoconnectProfile();
+        notifyNewProfile(profile);
         Log.e(TAG,"ended");
     }
 

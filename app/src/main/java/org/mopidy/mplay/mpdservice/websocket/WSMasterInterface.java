@@ -286,6 +286,7 @@ public class WSMasterInterface {
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             factory.setSSLContext(sc);
             this.mConnection = factory.createSocket(urlString);
+            this.mConnection.addHeader("Cookie", "moclauth="+mToken);
 
             for (WSConnectionStateChangeListener listener: listeners)
                 mConnection.addListener(listener);

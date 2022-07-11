@@ -178,14 +178,7 @@ public class WSInterface  {
         if (mGenericInterface != null) {
             mGenericInterface.setInstanceServerParameters(hostname, login, password, port);
         }
-/*
-        if (mArtworkInterface != null) {
-            mArtworkInterface.setInstanceServerParameters(hostname, password, port);
-        }
-        if (mBackgroundInterface != null) {
-            mBackgroundInterface.setInstanceServerParameters(hostname, password, port);
-        }
-        */
+
     }
 
     private void parseMessage(String message) {
@@ -313,15 +306,18 @@ public class WSInterface  {
             mAddListenerLatch = true;
             String protocol = "ws";
 
+            String uri = "/mopidy/ws";
             if(!mLogin.isEmpty()) {
                 mToken = getToken();
                 protocol = "wss";
+                uri = "/master/mopidyapi/ws";
             }
             factory.setVerifyHostname(false);
             SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             factory.setSSLContext(sc);
-            this.mConnection = factory.createSocket(protocol+"://"+mHostname+":"+String.valueOf(mPort)+"/mopidy/ws");
+            this.mConnection = factory.createSocket(protocol+"://"+mHostname+":"+String.valueOf(mPort)+uri);
+
             this.mConnection.addHeader("Cookie", "moclauth="+mToken);
             for (WSConnectionStateChangeListener listener: listeners)
                 mConnection.addListener(listener);
@@ -421,7 +417,8 @@ public class WSInterface  {
    }
 
     public void disconnect() {
-        mConnection.disconnect();
+        if(mConnection != null)
+            mConnection.disconnect();
         Log.e(mLogTag,"WS DISCONNECTED");
     }
 
@@ -493,7 +490,8 @@ public class WSInterface  {
     }
 
     public void sendRequest(JSONRequest request) throws MPDException.MPDConnectionException {
-        if (mConnection == null) return;
+        if (mConnection == null)
+            return;
         try {
             connect();
             if (!isConnected())

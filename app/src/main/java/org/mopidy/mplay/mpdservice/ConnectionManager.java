@@ -314,8 +314,9 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
             profile.setLocalProfileActive(true);
             return;
         }
-        if (mHostname.equals(profile.getHostname()) && mPort == profile.getPort())
-            return;
+        if (mHostname != null)
+            if (mHostname.equals(profile.getHostname()) && mPort == profile.getPort())
+             return;
         disconnectFromServer();
         setParameters(profile, context);
         reconnectLastServer(context);

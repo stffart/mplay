@@ -49,10 +49,13 @@ import org.mopidy.mplay.application.callbacks.FABFragmentCallback;
 import org.mopidy.mplay.application.callbacks.ProfileManageCallbacks;
 import org.mopidy.mplay.application.utils.ThemeUtils;
 import org.mopidy.mplay.application.viewmodels.ProfilesViewModel;
+import org.mopidy.mplay.application.views.NowPlayingView;
 import org.mopidy.mplay.mpdservice.ConnectionManager;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileChangeHandler;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -66,6 +69,42 @@ public class ProfilesFragment extends Fragment implements AbsListView.OnItemClic
     private ProfileManageCallbacks mCallback;
 
     private FABFragmentCallback mFABCallback = null;
+    private ProfileListener mProfileListener;
+
+    private static class ProfileListener extends MPDProfileChangeHandler {
+
+        private final WeakReference<ProfilesFragment> mFragment;
+
+        ProfileListener(final ProfilesFragment fragment) {
+            mFragment = new WeakReference<>(fragment);
+        }
+
+        protected void onProfileChanged(MPDServerProfile profile) {
+            final ProfilesFragment fragment = mFragment.get();
+            if (fragment != null) {
+                fragment.updateProfile(profile.getProfileName());
+            }
+        }
+    }
+
+    private boolean profileChanging = false;
+    private void updateProfile(String profileName) {
+        if(profileChanging) {
+            profileChanging = false;
+            return;
+        }
+
+        int count = mAdapter.getCount();
+        for(int i = 0; i < count; i++) {
+            MPDServerProfile profile = (MPDServerProfile) mAdapter.getItem(i);
+            if (profile.getProfileName().equals(profileName)) {
+                if (!profile.getAutoconnect())
+                    mAdapter.setActive(i,true);
+                profileChanging = true;
+            }
+        }
+
+    }
 
     public static ProfilesFragment newInstance() {
         return new ProfilesFragment();
@@ -92,7 +131,8 @@ public class ProfilesFragment extends Fragment implements AbsListView.OnItemClic
         registerForContextMenu(mListView);
 
         setHasOptionsMenu(true);
-
+        mProfileListener = new ProfileListener(this);
+        MPDProfileManager.getInstance(this.getContext()).registerProfileListener(mProfileListener);
         getViewModel().getData().observe(getViewLifecycleOwner(), this::onDataReady);
     }
 
