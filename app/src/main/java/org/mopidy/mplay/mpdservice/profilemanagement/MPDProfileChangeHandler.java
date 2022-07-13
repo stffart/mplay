@@ -44,6 +44,7 @@ public abstract class MPDProfileChangeHandler extends Handler {
     }
 
     public void profileChanged(MPDServerProfile profile ) {
+        if (profile == null) return;
         Message msg = this.obtainMessage();
         msg.obj = profile;
         this.sendMessage(msg);

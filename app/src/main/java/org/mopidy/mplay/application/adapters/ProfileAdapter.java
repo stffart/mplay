@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.mopidy.mplay.application.listviewitems.ProfileListItem;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
 import org.mopidy.mplay.mpdservice.websocket.WSInterface;
 import org.mopidy.mplay.mpdservice.websocket.WSMasterInterface;
@@ -54,8 +55,8 @@ public class ProfileAdapter extends GenericSectionAdapter<MPDServerProfile> {
         String hostname = profile.getHostname();
 
         boolean checked = profile.getAutoconnect();
-
-        if(profile.isLocalProfile() && profile.isLocalProfileActive())
+        boolean localActive = MPDProfileManager.getInstance(null).getLocalProfileEnabled();
+        if(profile.isLocalProfile() && localActive)
             checked = true;
 
         if (convertView != null) {
@@ -74,12 +75,10 @@ public class ProfileAdapter extends GenericSectionAdapter<MPDServerProfile> {
     public void setActive(int position, boolean active) {
         ArrayList<MPDServerProfile> new_profiles = new ArrayList<>();
         if (!((MPDServerProfile) getItem(position)).isLocalProfile()) {
+            MPDProfileManager.getInstance(null).enableLocalProfile(false);
+            WSInterface.getGenericInstance().stopLocalPlayer();
             for (MPDServerProfile profile : mModelData) {
                 profile.setAutoconnect(false);
-                if(profile.isLocalProfile()) {
-                    profile.setLocalProfileActive(false);
-                    WSInterface.getGenericInstance().stopLocalPlayer();
-                }
                 new_profiles.add(profile);
             }
             ((MPDServerProfile) getItem(position)).setAutoconnect(active);

@@ -72,7 +72,6 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
 
     boolean mIsLocal = false;
 
-    boolean mIsLocalActive = false;
 
     public MPDServerProfile() {
         mProfileName = "";
@@ -363,12 +362,6 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
         mIsLocal = local;
     }
 
-    public boolean isLocalProfileActive() {
-        return mIsLocalActive;
-    }
 
-    public void setLocalProfileActive(boolean active) {
-        mIsLocalActive = active;
-    }
 
 }

@@ -54,6 +54,7 @@ public class MPDProfileManager extends Observable {
     private String mMasterLogin;
     private String mMasterPassword;
     private boolean mRemoteEnabled = false;
+    private boolean mLocalProfileEnabled = false;
 
     private MPDProfileManager(Context context) {
         /* Create instance of the helper class to get the writable DB later. */
@@ -87,10 +88,10 @@ public class MPDProfileManager extends Observable {
         }
     }
 
-    private void distributeProfile() {
+    private void distributeProfile(MPDServerProfile profile) {
         synchronized (mProfileListeners) {
             for (MPDProfileChangeHandler handler : mProfileListeners) {
-                handler.profileChanged(getAutoconnectProfile());
+                handler.profileChanged(profile);
             }
         }
     }
@@ -335,6 +336,19 @@ public class MPDProfileManager extends Observable {
         return protocol+"://"+mRemoteHost+":"+String.valueOf(mRemotePort);
     }
 
+    public String getCloudHostname() {
+        if(mMasterLogin.isEmpty()) return "";
+        if (mRemoteEnabled) return mRemoteHost;
+        return mMasterHost;
+    }
+    public int getCloudPort() {
+        if(mMasterLogin.isEmpty()) return 0;
+        if (mRemoteEnabled) return mRemotePort;
+        return mMasterPort;
+    }
+
+
+
     public String getMasterLogin() {
         return mMasterLogin;
     }
@@ -358,7 +372,7 @@ public class MPDProfileManager extends Observable {
         db.update(MPDServerProfileTable.SQL_TABLE_NAME, autoConValuesOn, MPDServerProfileTable.COLUMN_PROFILE_NAME +"=?", new String[]{profile.getProfileName()});
         db.close();
 
-        distributeProfile();
+        distributeProfile(profile);
         notifyObservers();
 
 
@@ -374,5 +388,13 @@ public class MPDProfileManager extends Observable {
 
     public void enableRemote(boolean b) {
         mRemoteEnabled = b;
+    }
+
+    public void enableLocalProfile(boolean b) {
+        mLocalProfileEnabled = b;
+    }
+
+    public boolean getLocalProfileEnabled() {
+        return  mLocalProfileEnabled;
     }
 }

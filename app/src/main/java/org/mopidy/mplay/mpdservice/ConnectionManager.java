@@ -144,6 +144,7 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
         mContext = context;
         MPDProfileManager.getInstance(null).enableRemote(false);
         WifiManager wifiMgr = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        boolean localWifi = false;
         if (wifiMgr.isWifiEnabled()) {
             WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
             if (ActivityCompat.checkSelfPermission(mContext.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -151,13 +152,17 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
                 SupplicantState state = wifiInfo.getSupplicantState();
                 if (state == SupplicantState.COMPLETED) {
                     String ssid = wifiInfo.getSSID();
-                    if (! (ssid.equals("\"IRouterN\"") || ssid.equals("\"IRouterN5\""))) {
-                        mHostname = mRemoteHostname;
-                        mPort = mRemotePort;
-                        MPDProfileManager.getInstance(null).enableRemote(true);
+                    if ((ssid.equals("\"IRouterN\"") || ssid.equals("\"IRouterN5\"")))
+                    {
+                        localWifi = true;
                     }
                 }
             }
+        }
+        if(!localWifi) {
+            mHostname = mRemoteHostname;
+            mPort = mRemotePort;
+            MPDProfileManager.getInstance(null).enableRemote(true);
         }
         MPDProfileManager.getInstance(context).deleteProfile(profile);
         profile.setAutoconnect(true);
@@ -355,9 +360,10 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
 
     public void connectProfile(MPDServerProfile profile, Context context) {
         if (profile.isLocalProfile()) {
-            profile.setLocalProfileActive(true);
+            MPDProfileManager.getInstance(null).enableLocalProfile(true);
             return;
         }
+        MPDProfileManager.getInstance(null).enableLocalProfile(false);
         if (mHostname != null)
             if (mHostname.equals(profile.getHostname()) && mPort == profile.getPort())
              return;

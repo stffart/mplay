@@ -48,6 +48,7 @@ import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDFileEntry;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDOutput;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDStatistics;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDTrack;
+import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
 import org.mopidy.mplay.mpdservice.websocket.types.JSONAlbum;
 import org.mopidy.mplay.mpdservice.websocket.types.JSONArtist;
 import org.mopidy.mplay.mpdservice.websocket.types.JSONSimplePlaylist;
@@ -299,6 +300,13 @@ public class WSInterface  {
             return;
         mLogin = login;
         mPort = port;
+        String mCloudHostname = MPDProfileManager.getInstance(null).getCloudHostname();
+        if (!mCloudHostname.isEmpty())
+        {
+            mHostname = mCloudHostname;
+            mPort = MPDProfileManager.getInstance(null).getCloudPort();
+            mLogin = MPDProfileManager.getInstance(null).getMasterLogin();
+        }
         try {
             while(mAddListenerLatch) {
                 Thread.sleep(100);
@@ -1256,6 +1264,7 @@ public class WSInterface  {
                 return;
             if (currentTrack.getURI().isEmpty())
                 return;
+            mPlayer.initPlayer();
             mPlayer.playURI(currentTrack.getURI());
             mPlayHere = true;
             JSONRequest request_time_position = new JSONRequest(getNextID(), "core.playback.get_time_position");
