@@ -295,6 +295,8 @@ public class WSInterface  {
         mCache = new MPDCache(0);
         mHostname = hostname;
         mPassword = password;
+        if(mHostname == null)
+            return;
         mLogin = login;
         mPort = port;
         try {
@@ -820,6 +822,7 @@ public class WSInterface  {
 
         ArrayList<MPDArtist> result = new ArrayList<>();
         if(response.result != null && response.result.size() > 0)
+            if(response.result.get(0).artists != null)
             for (JSONArtist artist: response.result.get(0).artists) {
                 result.add(artist.toMPDArtist());
             }

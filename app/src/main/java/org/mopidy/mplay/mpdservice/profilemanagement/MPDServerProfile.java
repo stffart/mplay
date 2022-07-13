@@ -48,11 +48,15 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
     @NonNull
     private String mHostname = "";
     @NonNull
+    private String mRemoteHostname = "";
+
+    @NonNull
     private String mLogin = "";
 
     @NonNull
     private String mPassword = "";
     private int mPort;
+    private int mRemotePort;
 
     @NonNull
     private String mStreamingURL = "";
@@ -186,6 +190,17 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
         return mHostname;
     }
 
+
+    /**
+     *
+     * @return Servers hostname or ip address.
+     */
+    @NonNull
+    public String getRemoteHostname() {
+        return mRemoteHostname;
+    }
+
+
     /**
      *
      * @return Servers login.
@@ -201,6 +216,14 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
      */
     public void setHostname(@NonNull String hostname) {
         this.mHostname = hostname;
+    }
+
+    /**
+     * Sets the hostname of this profile
+     * @param hostname Hostname to use
+     */
+    public void setRemoteHostname(@NonNull String hostname) {
+        this.mRemoteHostname = hostname;
     }
 
     /**
@@ -242,6 +265,22 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
      */
     public void setPort(int port) {
         this.mPort = port;
+    }
+
+    /**
+     * The port of a server profile. The default port is 6600.
+     * @return TCP port of the profile
+     */
+    public int getRemotePort() {
+        return mRemotePort;
+    }
+
+    /**
+     * Sets the port of the profile. Usually is 6600.
+     * @param port TCP port of the profile
+     */
+    public void setRemotePort(int port) {
+        this.mRemotePort = port;
     }
 
 
@@ -331,4 +370,5 @@ public class MPDServerProfile implements MPDGenericItem, Parcelable {
     public void setLocalProfileActive(boolean active) {
         mIsLocalActive = active;
     }
+
 }

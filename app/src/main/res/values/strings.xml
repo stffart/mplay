@@ -146,6 +146,7 @@
     <string name="fragment_profile_title">Edit profile</string>
     <string name="fragment_profile_profilename">Profile name:</string>
     <string name="fragment_profile_hostname">Hostname or IP:</string>
+    <string name="fragment_profile_remote_hostname">Remote hostname or IP:</string>
     <string name="fragment_profile_login">Login:</string>
     <string name="fragment_profile_password">Password:</string>
     <string name="fragment_profile_port">Port:</string>

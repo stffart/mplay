@@ -32,6 +32,7 @@ import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 import com.neovisionaries.ws.client.WebSocketState;
 
+import org.mopidy.mplay.mpdservice.ConnectionManager;
 import org.mopidy.mplay.mpdservice.mpdprotocol.MPDException;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
@@ -121,7 +122,8 @@ public class WSMasterInterface {
                             MPDProfileManager.getInstance(null).setActiveProfile(profile);
                         }
                         if(device.me) {
-                            MPDProfileManager.getInstance(null).setMasterServer(uri.getHost(),uri.getPort(),profile.getLogin(),profile.getPassword());
+                            MPDProfileManager.getInstance(null).setMasterServer(uri.getHost(),profile.getRemoteHostname(),uri.getPort(),profile.getRemotePort(),profile.getLogin(),profile.getPassword());
+                            ConnectionManager.getInstance(null).createPlayer();
                         }
                         break;
                     }

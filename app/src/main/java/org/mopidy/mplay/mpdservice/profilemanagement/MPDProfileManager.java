@@ -48,8 +48,12 @@ public class MPDProfileManager extends Observable {
     private static MPDProfileManager mInstance;
     private String mMasterHost;
     private int mMasterPort;
+    private String mRemoteHost;
+    private int mRemotePort;
+
     private String mMasterLogin;
     private String mMasterPassword;
+    private boolean mRemoteEnabled = false;
 
     private MPDProfileManager(Context context) {
         /* Create instance of the helper class to get the writable DB later. */
@@ -113,9 +117,11 @@ public class MPDProfileManager extends Observable {
 
                 /* Server parameters */
                 String serverHostname = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_HOSTNAME));
+                String serverRemoteHostname = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_REMOTE_HOSTNAME));
                 String serverLogin = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_LOGIN));
                 String serverPassword = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PASSWORD));
                 int serverPort = cursor.getInt(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PORT));
+                int serverRemotePort = cursor.getInt(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_REMOTE_PORT));
                 long creationDate = cursor.getLong(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_PROFILE_DATE_CREATED));
 
                 /* Streaming parameters */
@@ -132,9 +138,11 @@ public class MPDProfileManager extends Observable {
                 /* Create temporary object to append to list. */
                 MPDServerProfile profile = new MPDServerProfile(profileName, autoConnect, creationDate);
                 profile.setHostname(serverHostname);
+                profile.setRemoteHostname(serverRemoteHostname);
                 profile.setLogin(serverLogin);
                 profile.setPassword(serverPassword);
                 profile.setPort(serverPort);
+                profile.setRemotePort(serverRemotePort);
 
                 profile.setStreamingURL(streamingURL);
                 profile.setStreamingEnabled(streamingEnabled);
@@ -143,7 +151,10 @@ public class MPDProfileManager extends Observable {
                 profile.setHTTPCoverEnabled(httpCoverEnabled);
 
                 profile.setMPDCoverEnabled(mpdCoverEnabled);
-
+                if(profile.getRemoteHostname() != null && !profile.getRemoteHostname().isEmpty()) {
+                    setMasterServer(profile.getHostname(),profile.getRemoteHostname(),profile.getPort(),
+                            profile.getRemotePort(),profile.getLogin(),profile.getPassword());
+                }
                 /* Finish and add to list */
                 profileList.add(profile);
             } while (cursor.moveToNext());
@@ -184,10 +195,13 @@ public class MPDProfileManager extends Observable {
 
         /* Server parameter */
         values.put(MPDServerProfileTable.COLUMN_SERVER_HOSTNAME, profile.getHostname());
+        values.put(MPDServerProfileTable.COLUMN_SERVER_REMOTE_HOSTNAME, profile.getRemoteHostname());
         values.put(MPDServerProfileTable.COLUMN_SERVER_LOGIN, profile.getLogin());
 
         values.put(MPDServerProfileTable.COLUMN_SERVER_PASSWORD, profile.getPassword());
         values.put(MPDServerProfileTable.COLUMN_SERVER_PORT, profile.getPort());
+        values.put(MPDServerProfileTable.COLUMN_SERVER_REMOTE_PORT, profile.getRemotePort());
+
         values.put(MPDServerProfileTable.COLUMN_PROFILE_DATE_CREATED, profile.getCreationDate());
 
         /* Streaming parameters */
@@ -248,10 +262,12 @@ public class MPDProfileManager extends Observable {
 
             /* Server parameters */
             String serverHostname = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_HOSTNAME));
+            String serverRemoteHostname = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_REMOTE_HOSTNAME));
             String serverLogin = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_LOGIN));
 
             String serverPassword = cursor.getString(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PASSWORD));
             int serverPort = cursor.getInt(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_PORT));
+            int serverRemotePort = cursor.getInt(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_SERVER_REMOTE_PORT));
             long creationDate = cursor.getLong(cursor.getColumnIndexOrThrow(MPDServerProfileTable.COLUMN_PROFILE_DATE_CREATED));
 
             /* Streaming parameters */
@@ -268,8 +284,10 @@ public class MPDProfileManager extends Observable {
             /* Create temporary object to append to list. */
             MPDServerProfile profile = new MPDServerProfile(profileName, autoConnect, creationDate);
             profile.setHostname(serverHostname);
+            profile.setRemoteHostname(serverRemoteHostname);
             profile.setPassword(serverPassword);
             profile.setPort(serverPort);
+            profile.setRemotePort(serverRemotePort);
             profile.setLogin(serverLogin);
             profile.setStreamingURL(streamingURL);
             profile.setStreamingEnabled(streamingEnabled);
@@ -289,20 +307,32 @@ public class MPDProfileManager extends Observable {
         return null;
     }
 
-    public void setMasterServer(String host, int port, String login, String password) {
+    public void setMasterServer(String host, String remoteHost, int port, int remotePort, String login, String password) {
         mMasterHost = host;
         mMasterPort = port;
         mMasterLogin = login;
         mMasterPassword = password;
-        ConnectionManager.getInstance(null).createPlayer();
+        mRemoteHost = remoteHost;
+        mRemotePort = remotePort;
     }
 
 
+
+
     public String getMasterURL() {
+        if(mRemoteEnabled)
+            return getRemoteMasterURL();
         String protocol = "http";
         if(!mMasterLogin.isEmpty())
             protocol = "https";
         return protocol+"://"+mMasterHost+":"+String.valueOf(mMasterPort);
+    }
+
+    public String getRemoteMasterURL() {
+        String protocol = "http";
+        if(!mMasterLogin.isEmpty())
+            protocol = "https";
+        return protocol+"://"+mRemoteHost+":"+String.valueOf(mRemotePort);
     }
 
     public String getMasterLogin() {
@@ -332,5 +362,17 @@ public class MPDProfileManager extends Observable {
         notifyObservers();
 
 
+    }
+
+    public String getRemoteHostname() {
+        return mRemoteHost;
+    }
+
+    public int getRemotePort() {
+        return mRemotePort;
+    }
+
+    public void enableRemote(boolean b) {
+        mRemoteEnabled = b;
     }
 }

@@ -101,7 +101,8 @@ public class LocalPlayer {
         }
         @Override
         public void run() {
-            mPlayer.stop();
+            if (mPlayer != null)
+                mPlayer.stop();
         }
     }
     private class PauseRunnable implements Runnable {

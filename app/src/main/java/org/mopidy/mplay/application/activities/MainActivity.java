@@ -22,8 +22,11 @@
 
 package org.mopidy.mplay.application.activities;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,6 +46,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -133,6 +137,11 @@ public class MainActivity extends GenericActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         boolean switchToSettings = false;
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] permissions = new String[1];
+            permissions[0] = ACCESS_FINE_LOCATION;
+            ActivityCompat.requestPermissions(this, permissions, 1);
+        }
 
         // restore drag state
         if (savedInstanceState != null) {

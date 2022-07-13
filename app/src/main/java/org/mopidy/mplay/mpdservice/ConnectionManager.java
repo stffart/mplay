@@ -22,11 +22,26 @@
 
 package org.mopidy.mplay.mpdservice;
 
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+
+
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import org.mopidy.mplay.R;
 import org.mopidy.mplay.BuildConfig;
@@ -41,6 +56,7 @@ import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
 import org.mopidy.mplay.mpdservice.websocket.WSInterface;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,9 +85,12 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
     private static final int SHORT_RECONNECT_TRIES = 5;
 
     private String mHostname;
+    private String mRemoteHostname;
+
     private String mPassword;
     private String mLogin;
     private int mPort;
+    private int mRemotePort;
 
     private boolean mAutoConnect = true;
 
@@ -118,10 +137,28 @@ public class ConnectionManager extends MPDConnectionStateChangeHandler {
         }
         mHostname = profile.getHostname();
         mPassword = profile.getPassword();
+        mRemoteHostname =  MPDProfileManager.getInstance(mContext).getRemoteHostname();
         mPort = profile.getPort();
+        mRemotePort = MPDProfileManager.getInstance(mContext).getRemotePort();
         mLogin = profile.getLogin();
         mContext = context;
-
+        MPDProfileManager.getInstance(null).enableRemote(false);
+        WifiManager wifiMgr = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifiMgr.isWifiEnabled()) {
+            WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+            if (ActivityCompat.checkSelfPermission(mContext.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                List<WifiConfiguration> wifiNetworks = wifiMgr.getConfiguredNetworks();
+                SupplicantState state = wifiInfo.getSupplicantState();
+                if (state == SupplicantState.COMPLETED) {
+                    String ssid = wifiInfo.getSSID();
+                    if (! (ssid.equals("\"IRouterN\"") || ssid.equals("\"IRouterN5\""))) {
+                        mHostname = mRemoteHostname;
+                        mPort = mRemotePort;
+                        MPDProfileManager.getInstance(null).enableRemote(true);
+                    }
+                }
+            }
+        }
         MPDProfileManager.getInstance(context).deleteProfile(profile);
         profile.setAutoconnect(true);
         MPDProfileManager.getInstance(context).addProfile(profile);

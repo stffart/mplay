@@ -57,9 +57,10 @@ public class EditProfileFragment extends Fragment {
 
     private String mProfilename;
     private String mHostname;
+    private String mRemoteHostname;
     private String mPassword;
     private String mLogin;
-
+    private int mRemotePort;
     private int mPort;
 
     private String mStreamingURL;
@@ -72,9 +73,11 @@ public class EditProfileFragment extends Fragment {
 
     private TextInputEditText mProfilenameView;
     private TextInputEditText mHostnameView;
+    private TextInputEditText mRemoteHostnameView;
     private TextInputEditText mLoginView;
     private TextInputEditText mPasswordView;
     private TextInputEditText mPortView;
+    private TextInputEditText mRemotePortView;
 
     private SwitchCompat mStreamingEnabledView;
     private TextInputEditText mStreamingURLView;
@@ -110,8 +113,10 @@ public class EditProfileFragment extends Fragment {
 
         mProfilenameView = view.findViewById(R.id.fragment_profile_profilename);
         mHostnameView = view.findViewById(R.id.fragment_profile_hostname);
+        mRemoteHostnameView = view.findViewById(R.id.fragment_profile_remote_hostname);
         mLoginView = view.findViewById(R.id.fragment_profile_login);
         mPasswordView = view.findViewById(R.id.fragment_profile_password);
+        mRemotePortView = view.findViewById(R.id.fragment_profile_remote_port);
         mPortView = view.findViewById(R.id.fragment_profile_port);
 
         mStreamingURLView = view.findViewById(R.id.fragment_profile_streaming_url);
@@ -134,10 +139,11 @@ public class EditProfileFragment extends Fragment {
             if (mOldProfile != null) {
                 mProfilename = mOldProfile.getProfileName();
                 mHostname = mOldProfile.getHostname();
+                mRemoteHostname = mOldProfile.getRemoteHostname();
                 mPassword = mOldProfile.getPassword();
                 mLogin = mOldProfile.getLogin();
                 mPort = mOldProfile.getPort();
-
+                mRemotePort = mOldProfile.getRemotePort();
                 mStreamingURL = mOldProfile.getStreamingURL();
                 mStreamingEnabled = mOldProfile.getStreamingEnabled();
 
@@ -169,9 +175,11 @@ public class EditProfileFragment extends Fragment {
         }
 
         mHostnameView.setText(mHostname);
+        mRemoteHostnameView.setText(mRemoteHostname);
         mPasswordView.setText(mPassword);
         mLoginView.setText(mLogin);
         mPortView.setText(String.valueOf(mPort));
+        mRemotePortView.setText(String.valueOf(mRemotePort));
 
         // Show/Hide streaming url view depending on state
         mStreamingEnabledView.setChecked(mStreamingEnabled);
@@ -259,6 +267,10 @@ public class EditProfileFragment extends Fragment {
             profileChanged = true;
             mHostname = mHostnameView.getText().toString();
         }
+        if (!mRemoteHostnameView.getText().toString().equals(mRemoteHostname)) {
+            profileChanged = true;
+            mRemoteHostname = mRemoteHostnameView.getText().toString();
+        }
         if (!mLoginView.getText().toString().equals(mLogin)) {
             profileChanged = true;
             mLogin = mLoginView.getText().toString();
@@ -271,6 +283,11 @@ public class EditProfileFragment extends Fragment {
             profileChanged = true;
             mPort = Integer.parseInt(mPortView.getText().toString());
         }
+        if (!mRemotePortView.getText().toString().isEmpty() && Integer.parseInt(mRemotePortView.getText().toString()) != mRemotePort) {
+            profileChanged = true;
+            mRemotePort = Integer.parseInt(mRemotePortView.getText().toString());
+        }
+
         if (!mStreamingURLView.getText().toString().equals(mStreamingURL)) {
             profileChanged = true;
             mStreamingURL = mStreamingURLView.getText().toString();
@@ -308,6 +325,8 @@ public class EditProfileFragment extends Fragment {
             mOldProfile.setHTTPCoverEnabled(mHTTPCoverEnabled);
             mOldProfile.setHTTPRegex(mHTTPCoverRegex);
             mOldProfile.setMPDCoverEnabled(mMPDCoverEnabled);
+            mOldProfile.setRemoteHostname(mRemoteHostname);
+            mOldProfile.setRemotePort(mRemotePort);
             ConnectionManager.getInstance(requireContext().getApplicationContext()).addProfile(mOldProfile, getContext());
         }
     }
