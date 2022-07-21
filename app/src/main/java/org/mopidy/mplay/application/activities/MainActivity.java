@@ -540,7 +540,9 @@ public class MainActivity extends GenericActivity
 
     protected void tryReconnect() {
         try {
+            reconnecting = true;
             WSInterface.getGenericInstance().reconnect();
+            reconnecting = false;
         } catch (MPDException e) {
             if (e instanceof  MPDException.MPDServerException) {
                 onMPDError((MPDException.MPDServerException) e);
@@ -550,10 +552,12 @@ public class MainActivity extends GenericActivity
             }
         }
     }
+    private boolean reconnecting = false;
     @Override
     protected void onMPDError(MPDException.MPDServerException e) {
         View layout = findViewById(R.id.drawer_layout);
         if (layout != null) {
+            if(reconnecting)
             new AlertDialog.Builder(layout.getContext())
                     .setTitle("Connection Error")
                     .setMessage(e.getServerMessage())
@@ -565,6 +569,7 @@ public class MainActivity extends GenericActivity
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+            else tryReconnect();
             String errorText = getString(R.string.snackbar_mpd_server_error_format, e.getErrorCode(), e.getCommandOffset(), e.getServerMessage());
             Snackbar sb = Snackbar.make(layout, errorText, Snackbar.LENGTH_LONG);
 
@@ -579,6 +584,7 @@ public class MainActivity extends GenericActivity
     protected void onMPDConnectionError(MPDException.MPDConnectionException e) {
         View layout = findViewById(R.id.drawer_layout);
         if (layout != null) {
+            if(reconnecting)
             new AlertDialog.Builder(layout.getContext())
                     .setTitle("Connection Error")
                     .setMessage(e.getError())
@@ -590,7 +596,8 @@ public class MainActivity extends GenericActivity
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-
+            else
+                tryReconnect();
             String errorText = getString(R.string.snackbar_mpd_connection_error_format, e.getError());
 
             Snackbar sb = Snackbar.make(layout, errorText, Snackbar.LENGTH_LONG);

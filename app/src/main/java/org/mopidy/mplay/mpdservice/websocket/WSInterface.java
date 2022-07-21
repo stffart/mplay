@@ -637,7 +637,7 @@ public class WSInterface  {
             try {
                 JSONSimpleResponse index = gson.fromJson(message_index, JSONSimpleResponse.class);
                 if (index.result == null)
-                    throw new MPDException("Track index result is null");
+                    throw new MPDException.MPDServerException("{Track index result is null}  Cannot get current track");
                 result.setCurrentSongIndex(Integer.valueOf(index.result));
             } catch (java.lang.IllegalStateException e) {
 
