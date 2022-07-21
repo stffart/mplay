@@ -45,6 +45,7 @@ public abstract class MPDConnectionErrorHandler extends Handler {
         } else if ( msg.obj instanceof MPDException.MPDServerException) {
             onMPDError((MPDException.MPDServerException) msg.obj);
         }
+
     }
 
     public void newMPDError(MPDException e) {

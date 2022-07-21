@@ -45,7 +45,12 @@
         android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         tools:targetApi="s">
-
+        <receiver android:name="org.mopidy.mplay.mpdservice.WifiReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="org.mopidy.mplay.application.activities.MainActivity"
             android:theme="@style/Theme.App.Starting"

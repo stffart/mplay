@@ -83,8 +83,10 @@ public class ProfileAdapter extends GenericSectionAdapter<MPDServerProfile> {
             }
             ((MPDServerProfile) getItem(position)).setAutoconnect(active);
             new_profiles.get(position).setAutoconnect(active);
-            JSONMasterActivateRequest activate_request = new JSONMasterActivateRequest(((MPDServerProfile) getItem(position)).getProfileName());
-            WSMasterInterface.getGenericInstance().sendRequest(activate_request);
+            if (!WSMasterInterface.getGenericInstance().lastActivated.equals(((MPDServerProfile) getItem(position)).getProfileName())) {
+                JSONMasterActivateRequest activate_request = new JSONMasterActivateRequest(((MPDServerProfile) getItem(position)).getProfileName());
+                WSMasterInterface.getGenericInstance().sendRequest(activate_request);
+            }
             swapModel(new_profiles);
         } else {
             WSInterface.getGenericInstance().startLocalPlayer();

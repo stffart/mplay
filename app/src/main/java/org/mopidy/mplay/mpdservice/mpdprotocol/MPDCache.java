@@ -128,7 +128,7 @@ public class MPDCache {
     }
 
     public MPDCurrentStatus getStatus() throws MPDException {
-        if (mStatus == null) throw new MPDException("Cannot get current status");
+        if (mStatus == null) throw new MPDException.MPDServerException("Cannot get current status");
         return mStatus;
     }
 

@@ -79,8 +79,9 @@ public class WSMasterInterface {
     private List<WSConnectionStateChangeListener> listeners = new ArrayList<WSConnectionStateChangeListener>();
     private boolean mAddListenerLatch = false;
     private String mToken = "";
+    public String lastActivated = "";
 
-    public static synchronized WSMasterInterface getGenericInstance() {
+    public static synchronized WSMasterInterface getGenericInstance()  {
         if (mGenericInterface == null) {
             mGenericInterface = new WSMasterInterface();
             mGenericInterface.setInstanceServerParameters(mHostname, mLogin, mPassword, mPort);
@@ -89,7 +90,7 @@ public class WSMasterInterface {
         return mGenericInterface;
     }
 
-    public void setServerParameters(String hostname, String login, String password, int port) {
+    public void setServerParameters(String hostname, String login, String password, int port)  {
         mHostname = hostname;
         mPassword = password;
         mPort = port;
@@ -119,7 +120,10 @@ public class WSMasterInterface {
                     if (profile.getHostname().equals(uri.getHost()) && profile.getPort() == uri.getPort()) {
                         found = true;
                         if (device.active) {
-                            MPDProfileManager.getInstance(null).setActiveProfile(profile);
+                            if (!lastActivated.equals(device.name)) {
+                                MPDProfileManager.getInstance(null).setActiveProfile(profile, true);
+                                WSMasterInterface.getGenericInstance().lastActivated = device.name;
+                            }
                         }
                         if(device.me) {
                             MPDProfileManager.getInstance(null).setMasterServer(uri.getHost(),profile.getRemoteHostname(),uri.getPort(),profile.getRemotePort(),profile.getLogin(),profile.getPassword());
@@ -182,7 +186,7 @@ public class WSMasterInterface {
         } catch (WebSocketException e) {
             Log.e(TAG,String.valueOf(mConnection.getState()));
             e.printStackTrace();
-        }
+            throw new MPDException("Cannot connect mopidy");        }
     }
 
     TrustManager[] trustAllCerts = new TrustManager[]{
@@ -243,10 +247,18 @@ public class WSMasterInterface {
         return cookieParams;
     }
 
-    private void setInstanceServerParameters(String hostname, String login, String password, int port) {
+    private void setInstanceServerParameters(String hostname, String login, String password, int port)  {
         mHostname = hostname;
         mPassword = password;
         mPort = port;
+        String mCloudHostname = MPDProfileManager.getInstance(null).getCloudHostname();
+        if (!mCloudHostname.isEmpty())
+        {
+            mHostname = mCloudHostname;
+            mPort = MPDProfileManager.getInstance(null).getCloudPort();
+            mLogin = MPDProfileManager.getInstance(null).getMasterLogin();
+        }
+
         try {
             while(mAddListenerLatch) {
                 Thread.sleep(100);

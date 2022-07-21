@@ -22,6 +22,7 @@
 
 package org.mopidy.mplay.mpdservice.websocket;
 
+import android.app.AlertDialog;
 import android.util.Log;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
@@ -390,6 +391,21 @@ public class WSInterface  {
         return null;
     }
 
+    public void reconnect() throws MPDException {
+        mConnection.sendClose();
+        connect();
+        while(mConnection.getState() == WebSocketState.CLOSING ||
+                mConnection.getState() == WebSocketState.CONNECTING )
+        {
+            try {
+                Log.e(TAG, "Start connection");
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void connect() throws  MPDException {
         if (mConnection == null) return;
         while(mConnection.getState() == WebSocketState.CLOSING ||
@@ -482,7 +498,7 @@ public class WSInterface  {
         }
     }
 
-    public int getCurrentVolume() throws MPDException.MPDConnectionException {
+    public int getCurrentVolume() throws MPDException.MPDConnectionException, MPDException.MPDServerException {
         if (mPlayHere) {
             return Math.round(mPlayer.getVolume()*100);
         } else {
@@ -494,7 +510,8 @@ public class WSInterface  {
             if (volume.result != null)
                 return Integer.valueOf(volume.result);
             else
-                return 0;
+                throw new MPDException.MPDServerException("{No answer from server}  Cannot get server volume");
+    //            return 0;
 
         }
     }
@@ -617,11 +634,15 @@ public class WSInterface  {
             result.setTrackLength(current_track.result.track.length/1000.0f);
 
             String message_index = waitResponse(request_index);
-            JSONSimpleResponse index = gson.fromJson(message_index, JSONSimpleResponse.class);
-            if(index.result == null)
-                throw new MPDException("Track index result is null");
-            result.setCurrentSongIndex(Integer.valueOf(index.result));
+            try {
+                JSONSimpleResponse index = gson.fromJson(message_index, JSONSimpleResponse.class);
+                if (index.result == null)
+                    throw new MPDException("Track index result is null");
+                result.setCurrentSongIndex(Integer.valueOf(index.result));
+            } catch (java.lang.IllegalStateException e) {
 
+
+            }
         }
         mCache.cacheStatus(result);
         return result;
@@ -972,7 +993,7 @@ public class WSInterface  {
             if (mCache.getPlaylists() != null)
                 return mCache.getPlaylists();
 
-            throw new MPDException("Cannot get playlists");
+            throw new MPDException.MPDServerException("Cannot get playlists");
         }
         for (JSONPlaylist playlist: playlists.result) {
             result.add(playlist.toMPDPlaylist());
@@ -1292,4 +1313,7 @@ public class WSInterface  {
     }
 
 
+    public boolean isPlayHere() {
+        return mPlayHere;
+    }
 }

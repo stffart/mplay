@@ -337,6 +337,7 @@ public class MPDProfileManager extends Observable {
     }
 
     public String getCloudHostname() {
+        if(mMasterLogin == null) return "";
         if(mMasterLogin.isEmpty()) return "";
         if (mRemoteEnabled) return mRemoteHost;
         return mMasterHost;
@@ -353,7 +354,7 @@ public class MPDProfileManager extends Observable {
         return mMasterLogin;
     }
 
-    public void setActiveProfile(MPDServerProfile profile) {
+    public void setActiveProfile(MPDServerProfile profile, boolean distribute) {
 
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         if (profile.isLocalProfile())
@@ -372,7 +373,8 @@ public class MPDProfileManager extends Observable {
         db.update(MPDServerProfileTable.SQL_TABLE_NAME, autoConValuesOn, MPDServerProfileTable.COLUMN_PROFILE_NAME +"=?", new String[]{profile.getProfileName()});
         db.close();
 
-        distributeProfile(profile);
+        if(distribute)
+          distributeProfile(profile);
         notifyObservers();
 
 

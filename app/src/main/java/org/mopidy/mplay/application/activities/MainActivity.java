@@ -24,6 +24,7 @@ package org.mopidy.mplay.application.activities;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -99,6 +100,7 @@ import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDCurrentStatus;
 import org.mopidy.mplay.mpdservice.mpdprotocol.mpdobjects.MPDTrack;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDProfileManager;
 import org.mopidy.mplay.mpdservice.profilemanagement.MPDServerProfile;
+import org.mopidy.mplay.mpdservice.websocket.WSInterface;
 
 public class MainActivity extends GenericActivity
         implements NavigationView.OnNavigationItemSelectedListener, AlbumCallback, ArtistsFragment.ArtistSelectedCallback,
@@ -536,10 +538,33 @@ public class MainActivity extends GenericActivity
         setNavbarHeader(getString(R.string.app_name_nice));
     }
 
+    protected void tryReconnect() {
+        try {
+            WSInterface.getGenericInstance().reconnect();
+        } catch (MPDException e) {
+            if (e instanceof  MPDException.MPDServerException) {
+                onMPDError((MPDException.MPDServerException) e);
+            } else
+            if (e instanceof  MPDException.MPDConnectionException) {
+                onMPDConnectionError((MPDException.MPDConnectionException) e);
+            }
+        }
+    }
     @Override
     protected void onMPDError(MPDException.MPDServerException e) {
         View layout = findViewById(R.id.drawer_layout);
         if (layout != null) {
+            new AlertDialog.Builder(layout.getContext())
+                    .setTitle("Connection Error")
+                    .setMessage(e.getServerMessage())
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            tryReconnect();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
             String errorText = getString(R.string.snackbar_mpd_server_error_format, e.getErrorCode(), e.getCommandOffset(), e.getServerMessage());
             Snackbar sb = Snackbar.make(layout, errorText, Snackbar.LENGTH_LONG);
 
@@ -554,6 +579,18 @@ public class MainActivity extends GenericActivity
     protected void onMPDConnectionError(MPDException.MPDConnectionException e) {
         View layout = findViewById(R.id.drawer_layout);
         if (layout != null) {
+            new AlertDialog.Builder(layout.getContext())
+                    .setTitle("Connection Error")
+                    .setMessage(e.getError())
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            tryReconnect();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
             String errorText = getString(R.string.snackbar_mpd_connection_error_format, e.getError());
 
             Snackbar sb = Snackbar.make(layout, errorText, Snackbar.LENGTH_LONG);

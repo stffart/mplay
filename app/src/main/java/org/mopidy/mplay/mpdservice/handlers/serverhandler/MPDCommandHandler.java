@@ -208,6 +208,8 @@ public class MPDCommandHandler extends MPDGenericHandler {
 
                 // Get step size from message
                 int stepSize = mpdAction.getIntExtra(MPDHandlerAction.NET_HANDLER_EXTRA_INT.EXTRA_VOLUME);
+                if(WSInterface.getGenericInstance().isPlayHere())
+                    stepSize = 10;
 
                 // Limit the volume value to 100(%)
                 int targetVolume = volume + stepSize;
@@ -222,6 +224,8 @@ public class MPDCommandHandler extends MPDGenericHandler {
                 int stepSize = mpdAction.getIntExtra(MPDHandlerAction.NET_HANDLER_EXTRA_INT.EXTRA_VOLUME);
 
                 // Limit the volume value to 0(%)
+                if(WSInterface.getGenericInstance().isPlayHere())
+                    stepSize = 10;
                 int targetVolume = volume - stepSize;
                 if (targetVolume < 0) {
                     targetVolume = 0;

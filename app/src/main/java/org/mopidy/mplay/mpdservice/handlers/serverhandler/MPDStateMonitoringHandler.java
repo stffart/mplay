@@ -168,7 +168,7 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
         }
     }
 
-    private void resynchronizeState() throws MPDException.MPDConnectionException {
+    private void resynchronizeState()  {
 
         // Stop the interpolation
         stopInterpolation();
@@ -177,7 +177,16 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
         stopResynchronization();
 
         mLastTimeBase = System.nanoTime();
-        int volume = WSInterface.getGenericInstance().getCurrentVolume();
+        int volume = 0;
+        try {
+            volume = WSInterface.getGenericInstance().getCurrentVolume();
+        } catch (MPDException.MPDConnectionException e) {
+            handleMPDError(e);
+            return;
+        } catch (MPDException.MPDServerException e) {
+            handleMPDError(e);
+            return;
+        }
         distributeNewVolume(new MPDStatusChangeHandler.Volume(volume));
         MPDCurrentStatus status = null;
         try {
@@ -278,7 +287,7 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
         }
     }
 
-    private void getState() {
+    private void getState()  {
         try {
             mLastStatus = WSInterface.getGenericInstance().getCurrentServerStatus();
             mLastFile = WSInterface.getGenericInstance().getCurrentSong();
@@ -288,11 +297,7 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
         }
         distributeNewStatus(mLastStatus);
         distributeNewTrack(mLastFile);
-        try {
-            resynchronizeState();
-        } catch (MPDException.MPDConnectionException e) {
-            e.printStackTrace();
-        }
+        resynchronizeState();
     }
 
     private void onConnected() {
@@ -319,11 +324,7 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
 
     public void onNoIdle() {
         // Server idle is over (reason unclear), resync the state
-        try {
-            resynchronizeState();
-        } catch (MPDException.MPDConnectionException e) {
-            e.printStackTrace();
-        }
+        resynchronizeState();
     }
 
     public void setRefreshInterval(int interval) {
@@ -335,11 +336,7 @@ public class MPDStateMonitoringHandler extends MPDGenericHandler {
 
         @Override
         public void run() {
-            try {
                 resynchronizeState();
-            } catch (MPDException.MPDConnectionException e) {
-                e.printStackTrace();
-            }
         }
     }
 

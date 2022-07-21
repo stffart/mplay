@@ -101,6 +101,7 @@ public class ProfilesFragment extends Fragment implements AbsListView.OnItemClic
                 if (!profile.getAutoconnect())
                     mAdapter.setActive(i,true);
                 profileChanging = true;
+
             }
         }
 
